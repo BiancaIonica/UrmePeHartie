@@ -1,28 +1,99 @@
+
+import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, database, ref, get, set } from './firebaseConfig.js';
+
+
 document.addEventListener("DOMContentLoaded", () => {
-    // Grab the form elements by their IDs
     const loginForm = document.querySelector("#login");
-    const createAccountForm = document.querySelector("#createAccount");
+    const registerForm = document.querySelector("#createAccount");
 
-    // Listen for clicks on the "Create account" link
     document.querySelector("#linkCreateAccount").addEventListener("click", (e) => {
-        e.preventDefault(); // Prevent the default anchor action
-        loginForm.classList.add("form--hidden"); // Hide the login form
-        createAccountForm.classList.remove("form--hidden"); // Show the create account form
-    });
-
-  
-    document.querySelector("#linkLogin").addEventListener("click", (e) => {
-        e.preventDefault(); 
-        loginForm.classList.remove("form--hidden"); 
-        createAccountForm.classList.add("form--hidden"); 
-    });
-
-    loginForm.addEventListener("submit", e=>{
         e.preventDefault();
-
-        //perform ajax/fetch login
-
-        setFormMessage(loginForm, "error", "Invalid username/passw combination");
+        loginForm.classList.add("form--hidden");
+        registerForm.classList.remove("form--hidden");
     });
 
+    document.querySelector("#linkLogin").addEventListener("click", (e) => {
+        e.preventDefault();
+        loginForm.classList.remove("form--hidden");
+        registerForm.classList.add("form--hidden");
+    });
+
+
+
+    //REGISTER
+
+    registerForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const email = registerForm.querySelector('input[type="email"]').value.trim();
+        const password = registerForm.querySelector('input[type="password"]').value.trim();
+        const userName = registerForm.querySelector('input[name="username"]').value.trim();
+
+        createUserWithEmailAndPassword(auth, email, password, userName)
+            .then((userCredential) => {
+                console.log('User created:', userCredential.user);
+                
+                set(ref(database, 'users/' + userCredential.user.uid), {
+                    email: email,
+                    userName: userName
+                });
+            })
+            .catch((error) => {
+                console.error('Error on user creation:', error.message);
+            });
+    });
+
+
+    //LOGIN
+
+    
+    loginForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const userInput = loginForm.querySelector('input[type="text"]').value.trim();
+        const password = loginForm.querySelector('input[type="password"]').value.trim();
+        
+         //console.log(email, password);
+
+         // Verify if the input is email
+        function isEmail(input) {
+            return input.includes('@');
+        }   
+
+        function authenticateUser(email) {
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                console.log('User logged in:', userCredential.user);
+            })
+            .catch((error) => {
+                console.error('Error on user login:', error.message);
+            });
+        }
+
+        if (isEmail(userInput)) {
+            authenticateUser(userInput);
+        } else {
+            // search for the relation between email adress and username in database
+            //hard for optimization!!!!!!
+            const usersRef = ref(database, 'users');
+            get(usersRef).then((snapshot) => {
+                let emailFound = null;
+                snapshot.forEach((childSnapshot) => {
+                    const user = childSnapshot.val();
+                    if (user.userName === userInput) {
+                        emailFound = user.email;
+                    }
+                });
+                if (emailFound) {
+                    authenticateUser(emailFound);
+                } else {
+                    console.error('Username not found');
+                }
+            }).catch((error) => {
+                console.error('Error on user lookup:', error);
+            });
+        }
+
+    });
+
+   
+    
 });

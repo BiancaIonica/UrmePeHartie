@@ -4,6 +4,8 @@ body{
     --color-secondary: #252c6a;
     --color-error: #cc3333;
     --color-success: #4bb544;
+    --color-option: #9999FF;
+    --color-option-dark: #9966FF;
     --border-radius: 4px;
 
     margin: 0;
@@ -104,11 +106,11 @@ display: none;
     border-radius: var(--border-radius);
     outline:none;
     cursor: pointer;
-    background: var(--color-primary);
+    background: var(--color-option);
 }
 
 .form__button:hover{
-    background: var(--color-primary-dark);
+    background: var(--color-option-dark);
 }
 
 .form__button:active{
