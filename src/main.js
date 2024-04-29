@@ -1,99 +1,40 @@
 
-import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, database, ref, get, set } from './firebaseConfig.js';
 
+document.getElementById('linkLogin').addEventListener('click', function(event) {
+    event.preventDefault(); 
+   
+    window.location.href = 'login.html';
+});
 
-document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.querySelector("#login");
-    const registerForm = document.querySelector("#createAccount");
-
-    document.querySelector("#linkCreateAccount").addEventListener("click", (e) => {
-        e.preventDefault();
-        loginForm.classList.add("form--hidden");
-        registerForm.classList.remove("form--hidden");
-    });
-
-    document.querySelector("#linkLogin").addEventListener("click", (e) => {
-        e.preventDefault();
-        loginForm.classList.remove("form--hidden");
-        registerForm.classList.add("form--hidden");
-    });
-
-
-
-    //REGISTER
-
-    registerForm.addEventListener("submit", e => {
-        e.preventDefault();
-        const email = registerForm.querySelector('input[type="email"]').value.trim();
-        const password = registerForm.querySelector('input[type="password"]').value.trim();
-        const userName = registerForm.querySelector('input[name="username"]').value.trim();
-
-        createUserWithEmailAndPassword(auth, email, password, userName)
-            .then((userCredential) => {
-                console.log('User created:', userCredential.user);
-                
-                set(ref(database, 'users/' + userCredential.user.uid), {
-                    email: email,
-                    userName: userName
-                });
-            })
-            .catch((error) => {
-                console.error('Error on user creation:', error.message);
-            });
-    });
-
-
-    //LOGIN
-
+document.addEventListener('DOMContentLoaded', (event) => {
+    const userDropdown = document.getElementById('userDropdown');
+    const userButton = document.querySelector('.user-btn');
+    const searchButton = document.querySelector('.search-btn');
     
-    loginForm.addEventListener("submit", e => {
-        e.preventDefault();
-        const userInput = loginForm.querySelector('input[type="text"]').value.trim();
-        const password = loginForm.querySelector('input[type="password"]').value.trim();
-        
-         //console.log(email, password);
+    // Functia pentru afisarea/ascunderea meniului dropdown la click
+    userButton.addEventListener('click', () => {
+        userDropdown.classList.toggle('show');
+    });
 
-         // Verify if the input is email
-        function isEmail(input) {
-            return input.includes('@');
-        }   
-
-        function authenticateUser(email) {
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                console.log('User logged in:', userCredential.user);
-            })
-            .catch((error) => {
-                console.error('Error on user login:', error.message);
-            });
+    window.addEventListener('click', (event) => {
+        if (!event.target.matches('.user-btn')) {
+            if (userDropdown.classList.contains('show')) {
+                userDropdown.classList.remove('show');
+            }
         }
-
-        if (isEmail(userInput)) {
-            authenticateUser(userInput);
-        } else {
-            // search for the relation between email adress and username in database
-            //hard for optimization!!!!!!
-            const usersRef = ref(database, 'users');
-            get(usersRef).then((snapshot) => {
-                let emailFound = null;
-                snapshot.forEach((childSnapshot) => {
-                    const user = childSnapshot.val();
-                    if (user.userName === userInput) {
-                        emailFound = user.email;
-                    }
-                });
-                if (emailFound) {
-                    authenticateUser(emailFound);
-                } else {
-                    console.error('Username not found');
-                }
-            }).catch((error) => {
-                console.error('Error on user lookup:', error);
-            });
-        }
-
     });
 
    
+    searchButton.addEventListener('click', () => {
+        // Obtine valoarea din inputul de cautare
+        const searchInput = document.querySelector('.search-input').value;
+        
+        //  cautare sau redirectionare catre o pagina cu cartile
+        console.log(`Cautare pentru: ${searchInput}`);
+        // window.location.href = `/search?query=${encodeURIComponent(searchInput)}`;
+    });
     
+ 
+
+
 });

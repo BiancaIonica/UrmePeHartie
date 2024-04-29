@@ -29,6 +29,7 @@ export { signInWithEmailAndPassword };
 export { onAuthStateChanged };
 export { signOut };
 export { sendPasswordResetEmail };
+export { getAuth };
 
 export { app, ref, set, get};
 export { storage, getStorage, ref as storageRef, uploadBytes, getDownloadURL};

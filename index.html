@@ -1,57 +1,123 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./src/main.css"> 
+    <title>Homepage - Biblioteca Online</title>
+    <link rel="stylesheet" href="./src/main.css">
     <link rel="icon" href="./src/lavender.ico" type="image/x-icon">
-    <title>Urme pe Hârtie</title>
+   
 </head>
-
 <body>
+    <div class="nav-bar">
+        <div class="logo">Urme pe Hârtie</div>
+        <div class="menu">
+            <ul>
+                <li><a href="#Acasa">Acasă</a></li>
+                <li><a href="#Despre">Despre noi</a></li>
+                <li><a href="#Carti">Cărți</a></li>
+                <li><a href="#AparitiiNoi">Apariții noi</a></li>
+                <li><a href="#Grupuri">Grupuri</a></li>
+                <li><a href="#Biblioteca">Bibliotecă</a></li>
+            </ul>
+            <input type="search" placeholder="Caută cărți, autori..." class="search-input">
+            <button class="search-btn">Caută</button>
+        </div>
+        <div class="user-menu">
+            <button class="user-btn" onclick="toggleUserMenu()">👤</button>
+            <div id="userDropdown" class="user-dropdown-content">
+                <a href="#">Profilul Meu</a>
+                <a href="#">Setări</a>
+                <a href="#">Ieșire</a>
+            </div>
+        </div>
+        <p class="form__text">
+            <a  class="form__link" href="./" id="linkLogin">Autentificare</a> 
+         </p>
+    </div>
+
     <div class="container">
-        <form class="form" id="login">
-            <h1 class="form__title">Login</h1>
-            <div class="form__message form__message--error"></div>
-            <div class="form__input-group">
-                <input type="text" name="emailOrUsername" autofocus placeholder="Email or Username" required class="form__input">
-                <div class="form__input-error-message"></div>
+        <h1 class="form__title">Explorați colecția noastră vastă de cărți</h1>
+        <!-- Caruselul cu cărți recomandate sau noi apariții -->
+        <div class="book-carousel">
+            <!-- Locul pentru slide-uri cu cărți -->
+        </div>
+        
+        <!-- Categorii populare de cărți -->
+        <div class="book-categories">
+            <h2>Categorii Populare</h2>
+            <div class="categories-list">
+                <a href="#" class="category-item">Literatură Clasică</a>
+                <a href="#" class="category-item">Ficțiune Contemporană</a>
+                <a href="#" class="category-item">Non-Ficțiune</a>
+                <a href="#" class="category-item">Știință și Tehnologie</a>
+                <!-- Mai multe categorii -->
             </div>
-            <div class="form__input-group">
-                <input type="password" class="form__input " autofocus placeholder="Password">
-                <div class="form__input--error-message"></div>
+        </div>
+
+        <!-- O secțiune pentru noile apariții -->
+        <div class="new-arrivals">
+            <h2>Noi Apariții</h2>
+            <div class="arrivals-grid">
+                <!-- Cărți individuale -->
             </div>
-            <button class="form__button" type="submit">Continue</button>
-             <p class="form__text">
-                <a  class="form__link" href="resetPassword.html" id="linkResetPassword">Forgot your password?</a>  
-             </p>
-             <p class="form__text">
-                <a  class="form__link" href="./" id="linkCreateAccount">Don't have an account? Create account.</a> 
-             </p>
-        </form>
-        <form class="form form--hidden" id="createAccount">
-            <h1 class="form__title">Create Account</h1>
-            <div class="form__message form__message--error"></div>
-            <div class="form__input-group">
-                <input type="text" name="username" required class="form__input" autofocus placeholder="Username">
-                <div class="form__input-error-message"></div>
+        </div>
+
+        <!-- Informații și link-uri utile în footer -->
+        <footer>
+            <div class="footer_main">
+    
+                <div class="tag">
+                    <img src="./src/lavender.ico">
+                    <p>
+                        
+                    </p>
+    
+                </div>
+    
+                <div class="tag">
+                    <h1>Quick Link</h1>
+                    <a href="#">Home</a>
+                    <a href="#">About</a>
+                    <a href="#">Featured</a>
+                    <a href="#">Arrivals</a>
+                    <a href="#">Reviews</a>
+                    <a href="#">Blog</a>
+                    
+                </div>
+    
+                <div class="tag">
+                    <h1>Contact Info</h1>
+                    <a href="#"><i class="fa-solid fa-phone"></i>+94 12 345 6789</a>
+                    <a href="#"><i class="fa-solid fa-phone"></i>+94 32 444 699</a>
+                    <a href="#"><i class="fa-solid fa-envelope"></i>bookstore123@gmail.com</a>
+                    
+                </div>
+    
+                <div class="tag">
+                    <h1>Follow Us</h1>
+                    <div class="social_link">
+                        <i class="fa-brands fa-facebook-f"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                        <i class="fa-brands fa-twitter"></i>
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </div>
+                    
+                </div>
+    
+                <div class="tag">
+                    <h1>Newsletter</h1>
+                    <div class="search_bar">
+                        <input type="text" placeholder="You email id here">
+                        <button type="submit">Subscribe</button>
+                    </div>                
+                </div>            
+                
             </div>
-            <div class="form__input-group">
-                <input type="email" name="email" required class="form__input" autofocus placeholder="Email">
-                <div class="form__input-error-message"></div>
-            </div>
-            <div class="form__input-group">
-                <input type="password" class="form__input " autofocus placeholder="Password">
-                <div class="form__input--error-message"></div>
-            </div>
-            <div class="form__input-group">
-                <input type="password" class="form__input " autofocus placeholder="Confirm Password">
-                <div class="form__input--error-message"></div>
-            </div>
-            <button class="form__button" type="submit">Continue</button>
-             <p class="form__text">
-                <a  class="form__link" href="./" id="linkLogin">Already have an account? Sign in</a> 
-             </p>
-        </form>
+        </footer>
+    
+       
     </div>
     <script type="module" src="./src/main.js"></script>
 </body>
+</html>
