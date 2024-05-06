@@ -37,32 +37,22 @@ import { storage, uploadBytes, getStorage, getDownloadURL, storageRef, getDataba
       console.error(`Failed to add book ${title}`, error);
     });
   }*/
+
   function parseFilename(filename) {
-    // Remove the file extension first
     const cleanedFilename = filename.replace('.pdf', '');
-  
-    // Find the first dash position to split author and title
     const dashIndex = cleanedFilename.indexOf(' - ');
-  
+
     if (dashIndex === -1) {
         console.error('Filename format incorrect, should be "Author - Title.pdf"');
-        return { author: '', title: '' };
+        return { author: 'Unknown', title: 'Untitled' };
     }
-  
+
     const author = cleanedFilename.substring(0, dashIndex);
     const title = cleanedFilename.substring(dashIndex + 3); // +3 to remove ' - ' part
-  
     return { author, title };
-  }
-  
+}
 
-  function uploadFile() {
-    const fileInput = document.getElementById('fileInput');
-    if (fileInput.files.length === 0) {
-        alert('Please select a file.');
-        return;
-    }
-    const file = fileInput.files[0];
+function uploadFile(file) {
     const fileRef = storageRef(storage, `pdf/${file.name}`);
     uploadBytes(fileRef, file).then((snapshot) => {
         return getDownloadURL(snapshot.ref);
@@ -81,6 +71,11 @@ import { storage, uploadBytes, getStorage, getDownloadURL, storageRef, getDataba
     });
 }
 
+function handleFiles(files) {
+    Array.from(files).forEach(file => {
+        uploadFile(file);
+    });
+}
 
 // Function to show a popup with a message
 function showPopup(message) {
@@ -96,9 +91,41 @@ function closePopup() {
 
 // Adding event listeners after the DOM has fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    const uploadBtn = document.getElementById('uploadButton');
-    uploadBtn.addEventListener('click', uploadFile);
+  const fileInput = document.getElementById('fileInput');
+  const fileDragArea = document.getElementById('fileDragArea');
+  const uploadButton = document.getElementById('uploadButton');
 
-    const closeButton = document.querySelector('.close-button');
-    closeButton.addEventListener('click', closePopup);
+  // Drag over handler
+  fileDragArea.addEventListener('dragover', (event) => {
+      event.preventDefault(); // Prevent default behavior (Prevent file from being opened)
+      fileDragArea.classList.add('drag-over');
+  });
+
+  // Drag leave handler
+  fileDragArea.addEventListener('dragleave', () => {
+      fileDragArea.classList.remove('drag-over');
+  });
+
+  // Drop handler
+  fileDragArea.addEventListener('drop', (event) => {
+      event.preventDefault();
+      fileDragArea.classList.remove('drag-over');
+      const files = event.dataTransfer.files; // Get files from the event
+      if (files.length > 0) {
+          fileInput.files = files; // Assign files to file input
+      }
+  });
+
+  fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+
+  uploadButton.addEventListener('click', () => {
+      if (fileInput.files.length > 0) {
+          handleFiles(fileInput.files);
+      } else {
+          alert('Please select a file.');
+      }
+  });
+
+  const closeButton = document.querySelector('.close-button');
+  closeButton.addEventListener('click', closePopup);
 });
