@@ -4,7 +4,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebas
 import { getAuth, signOut, sendPasswordResetEmail, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
 import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, listAll} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDc-5YV2a7td9LW1NPNnSeEHa54tIlMkJQ",
@@ -31,5 +31,5 @@ export { signOut };
 export { sendPasswordResetEmail };
 export { getAuth };
 
-export { app, ref, set, get};
-export { storage, getStorage, ref as storageRef, uploadBytes, getDownloadURL};
+export { getDatabase, app, ref, set, get};
+export { storage, getStorage, uploadBytes, getDownloadURL, storageRef, listAll};
