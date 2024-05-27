@@ -1,0 +1,101 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: url(./src/background.jpg);
+    background-size: cover;
+    background-position: center; /* Center the background image */
+    background-attachment: fixed;
+}
+
+.main-container {
+    background-color: #ffffff; /* White background for the container */
+    width: 80%; /* Adjust width as needed */
+    margin: auto; /* Center the container */
+    padding: 20px; /* Padding inside the container */
+    border-radius: 8px; /* Optional: Rounded corners for the container */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: Adds shadow for better focus */
+}
+
+h1 {
+    color: #5D3F6A; 
+    text-align: center;
+}
+
+#booksContainer {
+    max-width: 960px;
+    margin: auto;
+    padding: 20px;
+}
+
+.book {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.book h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.book h4 {
+    font-size: 0.9em; 
+    color: #666;
+    margin-top: 5px;
+}
+
+select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+input[type="text"], textarea {
+    width: 100%;
+    padding: 30px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #9C27B0; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block; 
+    margin-top: 10px; 
+}
+
+button:hover {
+    background-color: #7B1FA2; 
+}
+
+#searchInput {
+    width: 20%;
+    padding: 10px 20px; 
+   margin-left: 460px;
+} 
+
+
+
+@media (max-width: 768px) {
+    .book {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .book img {
+        margin-bottom: 20px;
+    }
+}

@@ -6,7 +6,9 @@
     <title>Homepage - Biblioteca Online</title>
     <link rel="stylesheet" href="./src/main.css">
     <link rel="icon" href="./src/lavender.ico" type="image/x-icon">
-   
+    <script type="module" src="./src/firebaseConfig.js"></script>
+
+
 </head>
 <body>
     <div class="nav-bar">
@@ -15,7 +17,15 @@
             <ul>
                 <li><a href="#Acasa">Acasă</a></li>
                 <li><a href="#Despre">Despre noi</a></li>
-                <li><a href="#Carti">Cărți</a></li>
+                <li class="dropdown">
+                    <a href="#Carti">Cărți</a>
+                    <div class="dropdown-content">
+                        <a href="booksbygenre.html?genre=nuvela">Nuvelă</a>
+                        <a href="booksbygenre.html?genre=fictiune-istorica">Ficțiune istorică</a>
+                        <a href="booksbygenre.html?genre=romantism">Romantism</a>
+                        <a href="booksbygenre.html?genre=clasic">Clasic</a>
+                    </div>
+                </li>
                 <li><a href="#AparitiiNoi">Apariții noi</a></li>
                 <li><a href="#Grupuri">Grupuri</a></li>
                 <li><a href="#Biblioteca">Bibliotecă</a></li>
@@ -38,24 +48,26 @@
 
     <div class="container">
         <h1 class="form__title">Explorați colecția noastră vastă de cărți</h1>
-        <!-- Caruselul cu cărți recomandate sau noi apariții -->
         <div class="book-carousel">
-            <!-- Locul pentru slide-uri cu cărți -->
-        </div>
+            <button class="carousel-button prev">❮</button>
+                <div class="carousel-container">
+                    <div id="nuvelă" class="categories-list"></div>
+                    <div id="ficțiuneistorică" class="categories-list"></div>
+                    <div id="clasic" class="categories-list"></div>
+                    <div id="ficțiuneliterară" class="categories-list"></div>
+                    <!-- Mai multe categorii -->
+                </div>
+             <button class="carousel-button next">❯</button>
+         </div>
+    </div>
         
-        <!-- Categorii populare de cărți -->
+       
         <div class="book-categories">
             <h2>Categorii Populare</h2>
-            <div class="categories-list">
-                <a href="#" class="category-item">Literatură Clasică</a>
-                <a href="#" class="category-item">Ficțiune Contemporană</a>
-                <a href="#" class="category-item">Non-Ficțiune</a>
-                <a href="#" class="category-item">Știință și Tehnologie</a>
-                <!-- Mai multe categorii -->
-            </div>
+           
         </div>
 
-        <!-- O secțiune pentru noile apariții -->
+       
         <div class="new-arrivals">
             <h2>Noi Apariții</h2>
             <div class="arrivals-grid">
@@ -63,7 +75,7 @@
             </div>
         </div>
 
-        <!-- Informații și link-uri utile în footer -->
+        
         <footer>
             <div class="footer_main">
     

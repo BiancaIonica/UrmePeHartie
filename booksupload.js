@@ -1,4 +1,4 @@
-import { storage, uploadBytes, getStorage, getDownloadURL, storageRef, getDatabase, listAll, set, ref, database } from "./src/firebaseConfig.js";
+import { storage, uploadBytes, getStorage, getDownloadURL, storageRef, getDatabase, listAll, set, ref, database, push } from "./src/firebaseConfig.js";
 
 
 //const pdfRef = storageRef(storage, 'pdf/');  // Reference to the directory where PDFs are stored
@@ -10,7 +10,7 @@ import { storage, uploadBytes, getStorage, getDownloadURL, storageRef, getDataba
       getDownloadURL(itemRef).then((url) => {
         const fileInfo = parseFilename(itemRef.name);
         console.log(`Found file: ${itemRef.name}, URL: ${url}`);
-        addBookToDatabase(fileInfo.title, fileInfo.author, url);
+        addatabaseookToDatabase(fileInfo.title, fileInfo.author, url);
       }).catch((error) => {
         console.error(`Error getting download URL for ${itemRef.name}`, error);
       });
@@ -25,7 +25,7 @@ import { storage, uploadBytes, getStorage, getDownloadURL, storageRef, getDataba
     return { author: parts[0], title: parts[1] };
   }
   
-  function addBookToDatabase(title, author, pdfUrl) {
+  function addatabaseookToDatabase(title, author, pdfUrl) {
     const bookRef = ref(database, 'books/' + title.replace(/\s+/g, '_').toLowerCase());
     set(bookRef, {
       title,
@@ -52,29 +52,45 @@ import { storage, uploadBytes, getStorage, getDownloadURL, storageRef, getDataba
     return { author, title };
 }
 
-function uploadFile(file) {
-    const fileRef = storageRef(storage, `pdf/${file.name}`);
-    uploadBytes(fileRef, file).then((snapshot) => {
-        return getDownloadURL(snapshot.ref);
-    }).then((url) => {
-        const fileInfo = parseFilename(file.name);
-        const bookRef = ref(database, 'books/' + fileInfo.title.replace(/\s+/g, '_').toLowerCase());
-        return set(bookRef, {
-            author: fileInfo.author,
-            title: fileInfo.title,
-            url: url
+// Funcție pentru încărcarea fișierului PDF și a copertei
+function uploadatabaseookAndCover(pdfFile, coverFile) {
+  const pdfRef = storageRef(storage, `pdf/${pdfFile.name}`);
+  const coverRef = storageRef(storage, `covers/${coverFile.name}`);
+
+  uploadBytes(pdfRef, pdfFile).then((pdfSnapshot) => {
+    return getDownloadURL(pdfSnapshot.ref);
+}).then((pdfUrl) => {
+    // Upload cover file
+    uploadBytes(coverRef, coverFile).then((coverSnapshot) => {
+        return getDownloadURL(coverSnapshot.ref).then((coverUrl) => {
+            
+            const booksRef = ref(database, 'books');
+            const newBookRef = push(booksRef);
+            return set(newBookRef, {
+                author: pdfFile.name.split(' - ')[0], // Assuming filename format "Author - Title.pdf"
+                title: pdfFile.name.split(' - ')[1].replace('.pdf', ''),
+                pdfUrl: pdfUrl,
+                coverUrl: coverUrl
+            });
         });
-    }).then(() => {
-        showPopup('File uploaded successfully!');
-    }).catch((error) => {
-        showPopup('Error uploading file: ' + error.message);
     });
+}).then(() => {
+    showPopup('Book and cover uploaded successfully!');
+    clearInputs();
+}).catch((error) => {
+    showPopup('Error uploading files: ' + error.message);
+    clearInputs();
+});
 }
 
-function handleFiles(files) {
-    Array.from(files).forEach(file => {
-        uploadFile(file);
-    });
+function handleFiles() {
+  const pdfInput = document.getElementById('fileInput');
+  const coverInput = document.getElementById('coverInput');
+  if (pdfInput.files.length > 0 && coverInput.files.length > 0) {
+      uploadatabaseookAndCover(pdfInput.files[0], coverInput.files[0]);
+  } else {
+      alert('Please select both a PDF and a cover image.');
+  }
 }
 
 // Function to show a popup with a message
@@ -89,11 +105,20 @@ function closePopup() {
     document.getElementById('uploadPopup').style.display = 'none';
 }
 
+function clearInputs() {
+  const pdfInput = document.getElementById('fileInput');
+  const coverInput = document.getElementById('coverInput');
+  pdfInput.value = '';  // Clear the PDF input
+  coverInput.value = '';  // Clear the cover input
+}
+
+
 // Adding event listeners after the DOM has fully loaded
 document.addEventListener('DOMContentLoaded', () => {
   const fileInput = document.getElementById('fileInput');
   const fileDragArea = document.getElementById('fileDragArea');
   const uploadButton = document.getElementById('uploadButton');
+
 
   // Drag over handler
   fileDragArea.addEventListener('dragover', (event) => {
@@ -119,13 +144,15 @@ document.addEventListener('DOMContentLoaded', () => {
   fileInput.addEventListener('change', () => handleFiles(fileInput.files));
 
   uploadButton.addEventListener('click', () => {
-      if (fileInput.files.length > 0) {
-          handleFiles(fileInput.files);
-      } else {
-          alert('Please select a file.');
-      }
-  });
+    if (fileInput.files.length > 0) {
+        handleFiles(fileInput.files);
+    } else {
+        alert('Please select a file.');
+    }
+});
+
 
   const closeButton = document.querySelector('.close-button');
   closeButton.addEventListener('click', closePopup);
+  
 });

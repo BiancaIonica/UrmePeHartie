@@ -10,9 +10,16 @@
 </head>
 <body>
     <div class="upload-container">
-        <input type="file" id="fileInput" multiple accept=".pdf">
-        <div id="fileDragArea" class="drag-area" onclick="document.getElementById('fileInput').click();">Drag files here or click to select files</div>
-        <button id="uploadButton">Upload PDFs</button>
+        <div class="file-input-container">
+            <label for="pdfInput">Choose your PDF file in this format: "Author - Book Name.pdf"</label>
+            <input type="file" id="fileInput" multiple accept=".pdf">
+        </div>
+        <div id="fileDragArea" class="drag-area" onclick="document.getElementById('fileInput').click();">Drag pdf files here or click to select files</div>
+        <div class="file-input-container">
+            <label for="coverInput">Choose your cover image:</label>
+            <input type="file" id="coverInput" accept="image/*">
+        </div>
+        <button id="uploadButton">Upload PDF & Cover</button>
         <div id="uploadPopup" class="popup-container" style="display: none;">
             <div class="popup-content">
                 <span id="uploadMessage"></span>

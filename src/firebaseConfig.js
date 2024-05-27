@@ -2,7 +2,7 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import { getAuth, signOut, sendPasswordResetEmail, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+import { getDatabase, ref, set, get, onValue, child, push, update } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, listAll} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
 
@@ -31,5 +31,5 @@ export { signOut };
 export { sendPasswordResetEmail };
 export { getAuth };
 
-export { getDatabase, app, ref, set, get};
-export { storage, getStorage, uploadBytes, getDownloadURL, storageRef, listAll};
+export { getDatabase, app, ref, set, get, onValue};
+export { storage, getStorage, uploadBytes, getDownloadURL, storageRef, listAll,  child, push, update};
