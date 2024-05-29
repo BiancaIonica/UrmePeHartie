@@ -2,7 +2,8 @@ import {
    getDatabase,
     ref,
     get,
-    child
+    child,
+    auth, onAuthStateChanged, signOut
   } from "./firebaseConfig.js";
 
   
@@ -14,13 +15,12 @@ document.getElementById('linkLogin').addEventListener('click', function(event) {
 });
 
 
-
-
 document.addEventListener('DOMContentLoaded', (event) => {
     const userDropdown = document.getElementById('userDropdown');
     const userButton = document.querySelector('.user-btn');
     const searchButton = document.querySelector('.search-btn');
-    
+    const linkLogout = document.getElementById('linkLogout');
+
     // Functia pentru afisarea/ascunderea meniului dropdown la click
     userButton.addEventListener('click', () => {
         userDropdown.classList.toggle('show');
@@ -34,7 +34,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-   
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // Utilizatorul este autentificat
+            linkLogin.style.display = 'none';
+            linkLogout.style.display = 'inline';
+        } else {
+            // Utilizatorul nu este autentificat
+            linkLogin.style.display = 'inline';
+            linkLogout.style.display = 'none';
+        }
+    });
+
+    linkLogout.addEventListener('click', (event) => {
+        event.preventDefault(); 
+        signOut(auth).then(() => {
+            // Deconectarea a fost un succes
+            console.log("Utilizatorul a fost deconectat");
+            window.location.href = 'index.html'; // Redirecționează la pagina principală
+        }).catch((error) => {
+            console.error("Eroare la deconectare", error);
+        });
+    });
+
     searchButton.addEventListener('click', () => {
         // Obtine valoarea din inputul de cautare
         const searchInput = document.querySelector('.search-input').value;
@@ -93,10 +115,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     get(child(dbRef, 'books')).then((snapshot) => {
         if (snapshot.exists()) {
-            console.log("Fetched Data:", snapshot.val()); // Log the fetched data
+            console.log("Fetched Data:", snapshot.val()); 
             snapshot.forEach((childSnapshot) => {
                 const book = childSnapshot.val();
-                booksData[book.title] = book;  // Store each book's data
+                booksData[book.title] = book;  
             });
         } else {
             console.log("No books available.");

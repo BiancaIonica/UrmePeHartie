@@ -79,3 +79,19 @@ body {
 #downloadLink:hover {
     background-color:  #9966FF;
 }
+
+#readPdf {
+    display: inline-block;
+    background-color: #9999FF;
+    color: white;
+    text-align: center;
+    padding: 10px 20px;
+    margin-top: 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#readPdf:hover {
+    background-color:  #9966FF;
+}

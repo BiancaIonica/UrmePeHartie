@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editare Profil</title>
+    <link rel="stylesheet" href="edit_profile.css">
+    <script  type="module" src="edit_profile.js"></script>
+    <script type="module" src="./src/firebaseConfig.js" ></script>
+</head>
+<body>
+    <div class="profile-edit-container">
+        <form id="editProfileForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" required>
+
+            <label for="firstName">Nume:</label>
+            <input type="text" id="firstName" required>
+
+            <label for="lastName">Prenume:</label>
+            <input type="text" id="lastName" required>
+
+            <label for="city">Oraș:</label>
+            <input type="text" id="city">
+
+            <label for="gender">Sex:</label>
+            <select id="gender">
+                <option value="male">Masculin</option>
+                <option value="female">Feminin</option>
+                <option value="other">Altele</option>
+            </select>
+
+            <label for="birthdate">Data nașterii:</label>
+            <input type="date" id="birthdate">
+
+            <label for="about">Despre mine:</label>
+            <textarea id="about"></textarea>
+
+            <label for="genres">Genuri preferate:</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="genres" value="Ficțiune"> Ficțiune</label>
+                <label><input type="checkbox" name="genres" value="Non-ficțiune"> Non-ficțiune</label>
+                <label><input type="checkbox" name="genres" value="Fantasy"> Fantasy</label>
+                <label><input type="checkbox" name="genres" value="Sci-fi"> Sci-fi</label>
+                <!-- Adăugați mai multe genuri după necesități -->
+            </div>
+
+            <label for="profilePicture">Poza de profil:</label>
+            <input type="file" id="profilePicture" accept="image/*">
+            <div id="preview" class="profile-picture-preview"></div>
+
+
+            <label for="showFavorites">Afișează cărți preferate:</label>
+            <input type="checkbox" id="showFavorites">
+
+            <button type="submit">Salvează modificările</button>
+        </form>
+    </div>
+</body>
+</html>

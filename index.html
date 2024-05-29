@@ -34,15 +34,17 @@
             <button class="search-btn">Caută</button>
         </div>
         <div class="user-menu">
-            <button class="user-btn" onclick="toggleUserMenu()">👤</button>
+            <button class="user-btn" >👤</button>
+            <img id="userPhoto" src="default-user.png" alt="User Photo" style="width: 32px; height: 32px; border-radius: 50%;">
             <div id="userDropdown" class="user-dropdown-content">
-                <a href="#">Profilul Meu</a>
-                <a href="#">Setări</a>
-                <a href="#">Ieșire</a>
+                <span id="username">Nume Utilizator</span>
+                <a href="/user_profile.html">Profilul Meu</a>
+                <a href="/user_settings.html">Setări</a>
             </div>
         </div>
         <p class="form__text">
             <a  class="form__link" href="./" id="linkLogin">Autentificare</a> 
+            <a class="form__link" href="./" id="linkLogout" style="display: none;">Deconectare</a>
          </p>
     </div>
 

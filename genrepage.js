@@ -19,7 +19,7 @@ function convertTextToHTML(text) {
 function loadBooks(query = "") {
   onValue(booksRef, (snapshot) => {
     const booksContainer = document.getElementById("booksContainer");
-    booksContainer.innerHTML = ""; // Clear the container before reloading books
+    booksContainer.innerHTML = ""; 
     snapshot.forEach((childSnapshot) => {
       const book = childSnapshot.val();
       if (

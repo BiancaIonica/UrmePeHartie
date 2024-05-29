@@ -116,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
         signInWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             console.log("User logged in:", userCredential.user);
+            window.location.href = '/index.html';
           })
           .catch((error) => {
             console.error("Error on user login:", error.message);

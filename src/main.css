@@ -103,6 +103,11 @@ body {
     display: block;
 }
 
+
+.user-btn img {
+    border-radius: 50%;
+  }
+
 /* Stilurile pentru containerul principal */
 .container {
     width: 85%;

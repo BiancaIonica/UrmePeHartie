@@ -33,7 +33,7 @@ body {
     width: 200px;
     display: flex;
     flex-direction: column;
-    
+    transition: transform 0.3s;
 }
 
 .book img {

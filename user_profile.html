@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="user_profile.css">
+    <script  type="module" src="user_profile.js"></script>
+    <script type="module" src="./src/firebaseConfig.js" ></script>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="default-profile.png" alt="Profile Picture" id="profile-picture">
+            <h1 id="user-name">Nume Utilizator</h1>
+        </div>
+        <div class="profile-details">
+            <p>Email: <span id="user-email">email@exemplu.com</span></p>
+            <p>Data nașterii: <span id="user-dob">01/01/2000</span></p>
+            <p>Genul preferat: <span id="user-genre">Ficțiune</span></p>
+            <button id="edit-profile-btn">Edit Profile</button>
+        </div>
+        <div class="favorite-books">
+            <h2>Cărți Preferate</h2>
+            <div class="book-list" id="book-list">
+                <!-- Books will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+    <script src="user_profile.js"></script>
+</body>
+</html>

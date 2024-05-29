@@ -36,10 +36,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         <img src="${book.coverUrl}" alt="${book.title} Cover" class="book-cover">
                         <h3>${book.title}</h3>
                         <p>${book.author}</p>
-                        <a href="${book.url}" target="_blank">Read More</a>
+                        <a href="bookdetails.html?bookId=${childSnapshot.key}" class="read-more-button">Read More</a>
                     `;
                     booksContainer.appendChild(bookElement);
                 }
+                
             });
         } else {
             booksContainer.innerHTML = '<p>No books found for this genre.</p>';
