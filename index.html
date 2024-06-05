@@ -27,19 +27,24 @@
                     </div>
                 </li>
                 <li><a href="#AparitiiNoi">Apariții noi</a></li>
-                <li><a href="#Grupuri">Grupuri</a></li>
-                <li><a href="#Biblioteca">Bibliotecă</a></li>
+               <li> <a href="/grupuri.html"  id="menuGrupuri" style="display:none;">Grupuri</a></li>
+               <li></li> <a href="/biblioteca.html"  id="menuBiblioteca" style="display:none;">Bibliotecă</a></li>
+
             </ul>
             <input type="search" placeholder="Caută cărți, autori..." class="search-input">
             <button class="search-btn">Caută</button>
         </div>
         <div class="user-menu">
             <button class="user-btn" >👤</button>
-            <img id="userPhoto" src="default-user.png" alt="User Photo" style="width: 32px; height: 32px; border-radius: 50%;">
+            <img id="userPhoto" src="default-user.png" >
             <div id="userDropdown" class="user-dropdown-content">
-                <span id="username">Nume Utilizator</span>
+                <span id="username"> </span>
                 <a href="/user_profile.html">Profilul Meu</a>
                 <a href="/user_settings.html">Setări</a>
+                <div id="adminPanel" style="display:none;">
+                    <a href="/admin_requests.html">Cereri de acceptat</a>
+                    <a href="/user_management.html">Gestionare Utilizatori</a>
+                  </div>
             </div>
         </div>
         <p class="form__text">

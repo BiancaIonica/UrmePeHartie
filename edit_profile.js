@@ -4,7 +4,7 @@ import {
      get,
      child,
      auth, onAuthStateChanged, signOut
-   } from "./firebaseConfig.js";
+   } from "./src/firebaseConfig.js";
  
 
 document.getElementById('editProfileForm').addEventListener('submit', function(e) {

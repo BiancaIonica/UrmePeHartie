@@ -117,6 +117,26 @@ document.addEventListener("DOMContentLoaded", () => {
           .then((userCredential) => {
             console.log("User logged in:", userCredential.user);
             window.location.href = '/index.html';
+            const userRef = ref(database, `users/${userCredential.user.uid}`);
+            get(userRef).then((snapshot) => {
+              if (snapshot.exists()) {
+                const userData = snapshot.val();
+                if (userData.role === 'admin') {
+                  localStorage.setItem('userRole', userData.role);
+                  window.location.href = 'index.html'; 
+                } else {
+                  if(userData.role==='user')
+                  {localStorage.setItem('userRole', userData.role);
+                  window.location.href = 'index.html'; }
+                  else {
+                    console.log("Role is not set, setting default role to 'user'.");
+                    set(ref(database, `users/${userCredential.user.uid}/role`), 'user');
+                    localStorage.setItem('userRole', 'user');
+                    window.location.href = 'index.html';
+                  }
+                }
+              }
+            });
           })
           .catch((error) => {
             console.error("Error on user login:", error.message);

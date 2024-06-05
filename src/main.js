@@ -3,7 +3,7 @@ import {
     ref,
     get,
     child,
-    auth, onAuthStateChanged, signOut
+    auth, onAuthStateChanged, signOut, database
   } from "./firebaseConfig.js";
 
   
@@ -13,7 +13,7 @@ document.getElementById('linkLogin').addEventListener('click', function(event) {
    
     window.location.href = 'login.html';
 });
-
+ 
 
 document.addEventListener('DOMContentLoaded', (event) => {
     const userDropdown = document.getElementById('userDropdown');
@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const searchButton = document.querySelector('.search-btn');
     const linkLogout = document.getElementById('linkLogout');
 
-    // Functia pentru afisarea/ascunderea meniului dropdown la click
+    
+
     userButton.addEventListener('click', () => {
         userDropdown.classList.toggle('show');
     });
@@ -35,23 +36,73 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     onAuthStateChanged(auth, (user) => {
+        toggleAuthButtons(user);
         if (user) {
-            // Utilizatorul este autentificat
-            linkLogin.style.display = 'none';
-            linkLogout.style.display = 'inline';
+            const userId = user.uid; 
+            const userRef = ref(database, 'users/' + userId);
+            document.getElementById('menuGrupuri').style.display='block';
+            document.getElementById('menuBiblioteca').style.display='block';
+            get(userRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    console.log('User Data:', userData); 
+                    //ADMIN
+                    const role = localStorage.getItem('role');
+                    console.log(userData.role);
+                    if (userData.role === 'admin') {
+                        document.getElementById('adminPanel').style.display = 'block';
+                       
+                    
+                        
+                        
+    }
+                    if (userData.userName) {
+                        console.log('Username:', userData.userName);
+                        document.getElementById('username').textContent = userData.userName;
+                    } else {
+                        console.log('Username not found in user data');
+                    }
+    
+                   
+                    if (userData.photoURL) {
+                        document.getElementById('userPhoto').src = userData.photoURL;
+                        console.log('Photo URL:', userData.photoURL);
+                    } else {
+                        console.log('No photo URL provided');
+                    }
+    
+                } else {
+                    console.log('No user data available');
+                }
+            }).catch((error) => {
+                console.error('Error retrieving user data:', error);
+            });
         } else {
-            // Utilizatorul nu este autentificat
-            linkLogin.style.display = 'inline';
-            linkLogout.style.display = 'none';
+            console.log('No user logged in');
+            document.getElementById('username').textContent = 'Guest';
         }
     });
-
+    
+    function toggleAuthButtons(user) {
+        const loginLink = document.getElementById('linkLogin');
+        const logoutLink = document.getElementById('linkLogout');
+    
+        if (user) {
+            loginLink.style.display = 'none';  // Ascunde butonul de autentificare
+            logoutLink.style.display = 'block'; // Arată butonul de deconectare
+        } else {
+            loginLink.style.display = 'block';  // Arată butonul de autentificare
+            logoutLink.style.display = 'none';  // Ascunde butonul de deconectare
+        }
+    }
     linkLogout.addEventListener('click', (event) => {
         event.preventDefault(); 
         signOut(auth).then(() => {
-            // Deconectarea a fost un succes
+            
             console.log("Utilizatorul a fost deconectat");
-            window.location.href = 'index.html'; // Redirecționează la pagina principală
+            toggleAuthButtons(null);
+            localStorage.removeItem('userRole');
+            window.location.href = 'index.html'; 
         }).catch((error) => {
             console.error("Eroare la deconectare", error);
         });
@@ -66,7 +117,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         // window.location.href = `/search?query=${encodeURIComponent(searchInput)}`;
     });
     
-   
+  
+  
 
     const dbRef = ref(getDatabase());
     get(child(dbRef, 'books')).then((snapshot) => {
