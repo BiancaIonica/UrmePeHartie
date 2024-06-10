@@ -133,22 +133,35 @@ display: none;
 }
 
 .popup-container {
-    display: none;
-    position: fixed; /* Fixed positioning to place the div relative to the viewport */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); /* Dim the background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .popup-content {
-    background-color: white;
+    position: fixed; 
+    top: 10px;
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: auto; 
     padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    background-color: white; 
+    z-index: 1000; 
+    display: none; 
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-content {
+    margin: 0 auto; 
+    text-align: center; 
+}
+
+.close-button {
+    cursor: pointer;
+    background-color: #b1aeae; 
+    color: white;
+    border: none;
+    padding: 8px 16px;
     border-radius: 5px;
-    text-align: center;
-  }
-  
+    margin-top: 10px; 
+}
+
+.close-button:hover {
+    background-color: rgb(95, 93, 93);
+}

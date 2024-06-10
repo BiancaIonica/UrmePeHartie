@@ -1,61 +1,153 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  --color-option: #9999FF;
+  --color-option-dark: #9966FF;
+  background: url(./src/background.jpg);
 }
 
-.profile-edit-container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.profile-container-outer {
+  width: 80%;
+  background: #fff; 
+  padding: 20px; 
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+  border-radius: 10px; 
+  margin-left: 130px;
 }
 
-label {
-    font-weight: bold;
+.profile-form {
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-input[type="text"],
-input[type="date"],
-textarea,
-select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.form-group label {
+  font-weight: bold;
 }
 
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
 
-button:hover {
-    background-color: #45a049;
+.profile-picture {
+  text-align: center;
+  margin-top: 20px;
 }
-
-.checkbox-group {
-    margin-bottom: 20px;
-}
-
 .profile-picture-preview {
-    width: 100px;
-    height: 100px;
-    border: 1px solid #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    border-radius: 50%;
-    background: url('placeholder.png') no-repeat center center;
-    background-size: cover;
+  width: 100px;
+  height: 100px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+  background: url('./src/default_user.png') no-repeat center center;
+  background-size: cover;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.form-actions button {
+  padding: 10px 20px;
+  border: none;
+  color: white;
+  background-color: var(--color-option);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.uploadButton{
+  padding: 10px 20px;
+  border: none;
+  color: white;
+  background-color: var(--color-option);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.form-actions button:hover {
+  background-color: var(--color-option-dark);
+}
+
+
+
+.profile-container {
+  display: flex;
+  background: #fff; 
+  padding: 20px;
+  border-radius: 10px; 
+}
+
+.profile-details, .profile-photo {
+  flex: 1 1 50%; 
+  margin: 10px;
+}
+
+.profile-photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+}
+
+input[type="text"], select, textarea {
+  width: 100%; 
+  margin-bottom: 10px; 
+}
+
+
+.form-actions{
+  margin-top: 150px;
+}
+
+
+.popup-container {
+  position: fixed; 
+  top: 10px;
+  left: 50%; 
+  transform: translateX(-50%); 
+  width: auto; 
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+  background-color: white; 
+  z-index: 1000; 
+  display: none; 
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-content {
+  margin: 0 auto; 
+  text-align: center; 
+}
+
+.close-button {
+  cursor: pointer;
+  background-color: #b1aeae; 
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  margin-top: 10px; 
+}
+
+.close-button:hover {
+  background-color: rgb(95, 93, 93);
 }

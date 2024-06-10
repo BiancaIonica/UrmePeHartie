@@ -7,7 +7,7 @@ import {
   get,
   set,
   getAuth,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
 } from "./src/firebaseConfig.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -36,31 +36,37 @@ document.addEventListener("DOMContentLoaded", () => {
       registerForm.classList.add("form--hidden");
     });
   }
- 
+
   //const auth = getAuth();
 
   if (linkResetPassword) {
     linkResetPassword.addEventListener("submit", (e) => {
       e.preventDefault();
-       const email = linkResetPassword.querySelector('input[type="email"]').value.trim();
-       console.log(email);
-       const closeButton = document.querySelector("#resetPasswordPopup .close-button");
-       closeButton.addEventListener('click', closePopup);
+      const email = linkResetPassword
+        .querySelector('input[type="email"]')
+        .value.trim();
+      console.log(email);
+      const closeButton = document.querySelector(
+        "#resetPasswordPopup .close-button"
+      );
+      closeButton.addEventListener("click", closePopup);
       sendPasswordResetEmail(auth, email)
         .then(() => {
           console.log("Password reset email sent!");
-          document.querySelector("#resetPasswordPopup").style.display = 'flex';
-          document.querySelector("#resetPasswordMessage").textContent = "Email-ul de resetare a parolei a fost trimis. Verificați inbox-ul.";
+          document.querySelector("#resetPasswordPopup").style.display = "flex";
+          document.querySelector("#resetPasswordMessage").textContent =
+            "Email-ul de resetare a parolei a fost trimis. Verificați inbox-ul.";
         })
         .catch((error) => {
           console.error("Error on password reset:", error.message);
-          document.querySelector("#resetPasswordPopup").style.display = 'flex';
-          document.querySelector("#resetPasswordMessage").textContent = "Eroare la trimiterea email-ului de resetare a parolei. Încearcați din nou.";
+          document.querySelector("#resetPasswordPopup").style.display = "flex";
+          document.querySelector("#resetPasswordMessage").textContent =
+            "Eroare la trimiterea email-ului de resetare a parolei. Încearcați din nou.";
         });
     });
   }
   function closePopup() {
-    document.querySelector("#resetPasswordPopup").style.display = 'none';
+    document.querySelector("#resetPasswordPopup").style.display = "none";
   }
 
   //REGISTER
@@ -78,20 +84,51 @@ document.addEventListener("DOMContentLoaded", () => {
         .querySelector('input[name="username"]')
         .value.trim();
 
-      createUserWithEmailAndPassword(auth, email, password, userName)
+        createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          console.log("User created:", userCredential.user);
-
-          set(ref(database, "users/" + userCredential.user.uid), {
+          const userId = userCredential.user.uid;
+          const newUserRef = ref(database, 'users/' + userId);
+          return set(newUserRef, {
             email: email,
             userName: userName,
+            role: 'user' 
           });
         })
+        .then(() => {
+          // Datele utilizatorului au fost setate cu succes
+          console.log("User created and role set to 'user'.");
+          showPopup('Utilizator creat cu succes! Vă puteți autentifica.');
+          clearInputs();
+        })
         .catch((error) => {
-          console.error("Error on user creation:", error.message);
+          console.error("Error on user creation or setting role:", error.message);
+          showPopup('Utilizatorul nu a putut fi creat:' + error.message);
+          clearInputs();
         });
     });
   }
+
+  
+function showPopup(message) {
+  const popup = document.getElementById('createPopup');
+  document.getElementById('createMessage').textContent = message;
+  popup.style.display = 'block';
+}
+
+function closePopup() {
+  document.getElementById('createPopup').style.display = 'none';
+}
+
+
+function clearInputs() {
+  registerForm.querySelector('input[type="email"]').value = '';
+  registerForm.querySelector('input[type="password"]').value = '';
+  registerForm.querySelector('input[name="username"]').value = '';
+  registerForm.querySelector('input[name="confirmPassword"]').value = '';
+}
+
+const closeButton = document.querySelector('.close-button');
+closeButton.addEventListener('click', closePopup);
 
   //LOGIN
 
@@ -116,23 +153,28 @@ document.addEventListener("DOMContentLoaded", () => {
         signInWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             console.log("User logged in:", userCredential.user);
-            window.location.href = '/index.html';
+            window.location.href = "/index.html";
             const userRef = ref(database, `users/${userCredential.user.uid}`);
             get(userRef).then((snapshot) => {
               if (snapshot.exists()) {
                 const userData = snapshot.val();
-                if (userData.role === 'admin') {
-                  localStorage.setItem('userRole', userData.role);
-                  window.location.href = 'index.html'; 
+                if (userData.role === "admin") {
+                  localStorage.setItem("userRole", userData.role);
+                  window.location.href = "index.html";
                 } else {
-                  if(userData.role==='user')
-                  {localStorage.setItem('userRole', userData.role);
-                  window.location.href = 'index.html'; }
-                  else {
-                    console.log("Role is not set, setting default role to 'user'.");
-                    set(ref(database, `users/${userCredential.user.uid}/role`), 'user');
-                    localStorage.setItem('userRole', 'user');
-                    window.location.href = 'index.html';
+                  if (userData.role === "user") {
+                    localStorage.setItem("userRole", userData.role);
+                    window.location.href = "index.html";
+                  } else {
+                    console.log(
+                      "Role is not set, setting default role to 'user'."
+                    );
+                    set(
+                      ref(database, `users/${userCredential.user.uid}/role`),
+                      "user"
+                    );
+                    localStorage.setItem("userRole", "user");
+                    window.location.href = "index.html";
                   }
                 }
               }

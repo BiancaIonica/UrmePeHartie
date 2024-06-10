@@ -1,4 +1,4 @@
-/* General Body Styles */
+
 body {
     font-family: 'Arial', sans-serif;
     padding: 20px;
@@ -10,7 +10,7 @@ body {
     background: url(./src/background.jpg);
 }
 
-/* Upload Container Styles */
+
 .upload-container {
     background: white;
     padding: 20px;
@@ -20,7 +20,7 @@ body {
     text-align: center;
 }
 
-/* Drag Area Styles */
+
 #fileDragArea {
     border: 2px dashed #007BFF;
     border-radius: 5px;
@@ -43,7 +43,7 @@ body {
     background-color: #b6aeae; /* Light grey background to indicate active drag area */
 }
 
-/* File Input and Button Styles */
+
 input[type="file"] {
     
     width: 100%;
@@ -65,35 +65,35 @@ button:hover {
     background-color: #0056b3;
 }
 
-/* Popup Styles */
+
 .popup-container {
-    position: fixed; /* Fixed positioning to place the div relative to the viewport */
-    top: 10px; /* Change this to more or less depending on your preference */
-    left: 50%; /* Center align the popup */
-    transform: translateX(-50%); /* Shift left by 50% of its own width to truly center it */
-    width: auto; /* Adjust width as necessary */
-    padding: 20px; /* Padding for aesthetics */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: adds shadow for better visibility */
-    background-color: white; /* Background color of the popup */
-    z-index: 1000; /* Makes sure the popup is on top of other content */
-    display: none; /* Keeps the popup hidden until it's needed */
+    position: fixed; 
+    top: 10px;
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: auto; 
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    background-color: white; 
+    z-index: 1000; 
+    display: none; 
     align-items: center;
     justify-content: center;
 }
 
 .popup-content {
-    margin: 0 auto; /* Centers the content inside the popup */
-    text-align: center; /* Centers the text inside the popup */
+    margin: 0 auto; 
+    text-align: center; 
 }
 
 .close-button {
     cursor: pointer;
-    background-color: #f44336; /* Red color for the close button */
+    background-color: #f44336; 
     color: white;
     border: none;
     padding: 8px 16px;
     border-radius: 5px;
-    margin-top: 10px; /* Space between message and button */
+    margin-top: 10px; 
 }
 
 .close-button:hover {

@@ -93,14 +93,13 @@ function handleFiles() {
   }
 }
 
-// Function to show a popup with a message
+
 function showPopup(message) {
     const popup = document.getElementById('uploadPopup');
     document.getElementById('uploadMessage').textContent = message;
     popup.style.display = 'block';
 }
 
-// Function to close the popup
 function closePopup() {
     document.getElementById('uploadPopup').style.display = 'none';
 }

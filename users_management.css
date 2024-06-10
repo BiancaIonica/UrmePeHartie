@@ -1,0 +1,99 @@
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    --color-option: #9999FF;
+    --color-option-dark: #9966FF;
+    background: url(./src/background.jpg);
+}
+
+.tables-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.table-wrapper {
+    flex: 1; /* fiecare tabel va ocupa o jumătate din spațiul disponibil */
+    margin: 0 10px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8); 
+    margin-bottom: 20px; 
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2; 
+}
+
+
+tr {
+    background-color: rgba(255, 255, 255, 0.9); 
+}
+
+button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--color-option); 
+    color: white;
+}
+
+button:hover {
+    background-color: var(--color-option-dark); 
+}
+
+/* Stiluri pentru Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Fundal negru cu transparență */
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% din partea de sus a ecranului */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%; /* Lățimea modalului */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  

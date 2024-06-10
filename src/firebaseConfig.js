@@ -1,8 +1,8 @@
 
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-import { getAuth, signOut, sendPasswordResetEmail, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-import { getDatabase, ref, set, get, onValue, child, push, update } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+import { getAuth, signOut, sendPasswordResetEmail, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged , deleteUser, updateEmail, updatePassword, updateProfile, EmailAuthProvider, reauthenticateWithCredential, verifyBeforeUpdateEmail} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+import { getDatabase, ref, set, get, onValue, child, push, update, remove } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, listAll} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
 
@@ -30,6 +30,9 @@ export { onAuthStateChanged };
 export { signOut };
 export { sendPasswordResetEmail };
 export { getAuth };
-
+export { deleteUser };
+export { updateEmail};
+export { updatePassword};
+export { updateProfile,EmailAuthProvider, reauthenticateWithCredential, verifyBeforeUpdateEmail};
 export { getDatabase, app, ref, set, get, onValue};
-export { storage, getStorage, uploadBytes, getDownloadURL, storageRef, listAll,  child, push, update};
+export { storage, getStorage, uploadBytes, getDownloadURL, storageRef, listAll,  child, push, update, remove};

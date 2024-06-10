@@ -1,5 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Quicksand, sans-serif;
     background-image: url('./src/background.jpg');
     background-size: cover;  
     background-position: center; 
@@ -16,6 +16,13 @@ body {
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
    
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
 }
 
 .book-info {
@@ -94,4 +101,44 @@ body {
 
 #readPdf:hover {
     background-color:  #9966FF;
+}
+
+
+
+#addToFavorites {
+    position: relative; 
+    width: 50px; 
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    overflow: hidden; 
+}
+
+#addToFavorites img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: auto;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#addToFavorites .default-icon {
+    opacity: 1;
+}
+
+#addToFavorites .hover-icon {
+    opacity: 0;
+}
+
+#addToFavorites:hover .default-icon {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+#addToFavorites:hover .hover-icon {
+    opacity: 1;
+    transform: scale(1.05);
 }

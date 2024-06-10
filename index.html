@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
 
 
 </head>
+
 <body>
     <div class="nav-bar">
         <div class="logo">Urme pe Hârtie</div>
@@ -27,116 +29,120 @@
                     </div>
                 </li>
                 <li><a href="#AparitiiNoi">Apariții noi</a></li>
-               <li> <a href="/grupuri.html"  id="menuGrupuri" style="display:none;">Grupuri</a></li>
-               <li></li> <a href="/biblioteca.html"  id="menuBiblioteca" style="display:none;">Bibliotecă</a></li>
+                <li> <a href="/grupuri.html" id="menuGrupuri" style="display:none;">Grupuri</a></li>
+                <li></li> <a href="/biblioteca.html" id="menuBiblioteca" style="display:none;">Bibliotecă</a></li>
 
             </ul>
             <input type="search" placeholder="Caută cărți, autori..." class="search-input">
             <button class="search-btn">Caută</button>
         </div>
+        <div class="prop-user">
         <div class="user-menu">
-            <button class="user-btn" >👤</button>
-            <img id="userPhoto" src="default-user.png" >
+        <div class="user-icon">
+            <img id="userPhoto" src="./src/default_user.png" alt="User Photo" style="cursor: pointer;">
+        </div>    
             <div id="userDropdown" class="user-dropdown-content">
                 <span id="username"> </span>
-                <a href="/user_profile.html">Profilul Meu</a>
-                <a href="/user_settings.html">Setări</a>
-                <div id="adminPanel" style="display:none;">
-                    <a href="/admin_requests.html">Cereri de acceptat</a>
-                    <a href="/user_management.html">Gestionare Utilizatori</a>
-                  </div>
+                <li><img src="./src/profileIcon.png"><a href="/user_profile.html">Profilul Meu</a></li>
+                <li><img src="./src/settingsIcon.png"> <a href="/user_settings.html">Setări</a></li>
+                <div id="adminPanel" style="display:none;"> 
+                    <li><img src="./src/requestsIcon.png"><a href="/admin_requests.html">Cereri de acceptat</a></li>
+                    <li><img src="./src/usersIcon.png"><a href="/user_management.html">Gestionare Utilizatori</a></li>
+                </div>
             </div>
         </div>
         <p class="form__text">
-            <a  class="form__link" href="./" id="linkLogin">Autentificare</a> 
+            <a class="form__link" href="./" id="linkLogin">Autentificare</a>
             <a class="form__link" href="./" id="linkLogout" style="display: none;">Deconectare</a>
-         </p>
+        </p>
+        </div>
     </div>
 
     <div class="container">
         <h1 class="form__title">Explorați colecția noastră vastă de cărți</h1>
         <div class="book-carousel">
             <button class="carousel-button prev">❮</button>
-                <div class="carousel-container">
-                    <div id="nuvelă" class="categories-list"></div>
-                    <div id="ficțiuneistorică" class="categories-list"></div>
-                    <div id="clasic" class="categories-list"></div>
-                    <div id="ficțiuneliterară" class="categories-list"></div>
-                    <!-- Mai multe categorii -->
-                </div>
-             <button class="carousel-button next">❯</button>
-         </div>
+            <div class="carousel-container">
+                <div id="nuvelă" class="categories-list"></div>
+                <div id="ficțiuneistorică" class="categories-list"></div>
+                <div id="clasic" class="categories-list"></div>
+                <div id="ficțiuneliterară" class="categories-list"></div>
+                <!-- Mai multe categorii -->
+            </div>
+            <button class="carousel-button next">❯</button>
+        </div>
     </div>
-        
-       
-        <div class="book-categories">
-            <h2>Categorii Populare</h2>
-           
-        </div>
 
-       
-        <div class="new-arrivals">
-            <h2>Noi Apariții</h2>
-            <div class="arrivals-grid">
-                <!-- Cărți individuale -->
-            </div>
-        </div>
 
-        
-        <footer>
-            <div class="footer_main">
-    
-                <div class="tag">
-                    <img src="">
-                    <p>
-                        
-                    </p>
-    
-                </div>
-    
-                <div class="tag">
-                    <h1>Quick Link</h1>
-                    <a href="#">Home</a>
-                    <a href="#">About</a>
-                    <a href="#">Featured</a>
-                    <a href="#">Arrivals</a>
-                    <a href="#">Reviews</a>
-                    <a href="#">Blog</a>
-                    
-                </div>
-    
-                <div class="tag">
-                    <h1>Contact Info</h1>
-                    <a href="#"><i class="fa-solid fa-phone"></i>+nr1</a>
-                    <a href="#"><i class="fa-solid fa-phone"></i>+nr2</a>
-                    <a href="#"><i class="fa-solid fa-envelope"></i>email123@gmail.com</a>
-                    
-                </div>
-    
-                <div class="tag">
-                    <h1>Follow Us</h1>
-                    <div class="social_link">
-                        <i class="fa-brands fa-facebook-f"></i>
-                        <i class="fa-brands fa-instagram"></i>
-                        <i class="fa-brands fa-twitter"></i>
-                        <i class="fa-brands fa-linkedin-in"></i>
-                    </div>
-                    
-                </div>
-    
-                <div class="tag">
-                    <h1>Newsletter</h1>
-                    <div class="search_bar">
-                        <input type="text" placeholder="You email id here">
-                        <button type="submit">Subscribe</button>
-                    </div>                
-                </div>            
-                
+    <div class="book-categories">
+        <h2>Categorii Populare</h2>
+
+    </div>
+
+
+    <div class="new-arrivals">
+        <h2>Noi Apariții</h2>
+        <div class="arrivals-grid">
+            <!-- Cărți individuale -->
+        </div>
+    </div>
+
+
+    <footer>
+        <div class="footer_main">
+
+            <div class="tag">
+                <img src="">
+                <p>
+
+                </p>
+
             </div>
-        </footer>
-    
-       
+
+            <div class="tag">
+                <h1>Quick Link</h1>
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Featured</a>
+                <a href="#">Arrivals</a>
+                <a href="#">Reviews</a>
+                <a href="#">Blog</a>
+
+            </div>
+
+            <div class="tag">
+                <h1>Contact Info</h1>
+                <a href="#"><i class="fa-solid fa-phone"></i>+nr1</a>
+                <a href="#"><i class="fa-solid fa-phone"></i>+nr2</a>
+                <a href="#"><i class="fa-solid fa-envelope"></i>email123@gmail.com</a>
+
+            </div>
+
+            <div class="tag">
+                <h1>Follow Us</h1>
+                <div class="social_link">
+                    <i class="fa-brands fa-facebook-f"></i>
+                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-linkedin-in"></i>
+                </div>
+
+            </div>
+
+            <div class="tag">
+                <h1>Newsletter</h1>
+                <div class="search_bar">
+                    <input type="text" placeholder="You email id here">
+                    <button type="submit">Subscribe</button>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+
     </div>
     <script type="module" src="./src/main.js"></script>
 </body>
+
 </html>

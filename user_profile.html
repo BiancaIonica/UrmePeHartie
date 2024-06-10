@@ -9,24 +9,40 @@
     <script type="module" src="./src/firebaseConfig.js" ></script>
 </head>
 <body>
-    <div class="profile-container">
-        <div class="profile-header">
-            <img src="default-profile.png" alt="Profile Picture" id="profile-picture">
-            <h1 id="user-name">Nume Utilizator</h1>
+    <div class="profile-page">
+        <div class="profile-section">
+            <div class="profile-header">
+            <img id="profilePicture" src="./src/default_user.png" alt="Profile Picture">
+            <h2 id="firstName"></h2>
+            <h2 id="lastName"></h2>
         </div>
-        <div class="profile-details">
-            <p>Email: <span id="user-email">email@exemplu.com</span></p>
-            <p>Data nașterii: <span id="user-dob">01/01/2000</span></p>
-            <p>Genul preferat: <span id="user-genre">Ficțiune</span></p>
-            <button id="edit-profile-btn">Edit Profile</button>
+            <p><strong></strong> <span id="username"></span></p>
+            <p><strong>Email:</strong> <span id="email"></span></p>
+            <p><strong>Adresă:</strong> <span id="address"></span></p>
+            <p><strong>Data nașterii:</strong> <span id="birthdate"></span></p>
+            <p><strong>Gen:</strong> <img id="genderIcon" src="" alt="Gender icon" /></p>
+            <p><strong>Genuri preferate:</strong> <span id="genres"></span></p>
+            <p><strong>Descriere:</strong> <textarea id="description" readonly></textarea></p>
+           
+       
+    </div>
+    <div class="content-section">
+        <button class="button" href="edit_profile.html">Editează Profil</button>
+        <div class="tabs">
+            <button class="tab-link" onclick="openTab(event, 'Favorites')">Cărți preferate</button>
+            <button class="tab-link" onclick="openTab(event, 'Groups')">Grupuri</button>
         </div>
-        <div class="favorite-books">
-            <h2>Cărți Preferate</h2>
-            <div class="book-list" id="book-list">
-                <!-- Books will be dynamically inserted here -->
-            </div>
+        <div id="Favorites" class="tab-content" style="display:none;">
+            <!-- Content for Favorites -->
+        </div>
+        <div id="Groups" class="tab-content" style="display:none;">
+            <!-- Content for Groups -->
         </div>
     </div>
+</div>
+    <script src="./src/firebaseConfig.js"></script>
     <script src="user_profile.js"></script>
 </body>
 </html>
+
+
