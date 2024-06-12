@@ -1,6 +1,6 @@
 body {
-    font-family: Quicksand sans-serif; /* Folosirea unui font general disponibil */
-    background: url('./src/background.jpg') no-repeat center center fixed; /* Imagine de fundal pentru tot corpul paginii */
+    font-family: Quicksand, sans-serif;
+    background: url('./src/background.jpg') no-repeat center center fixed;
     background-size: cover;
     margin: 0;
     padding: 20px;
@@ -15,89 +15,72 @@ body {
 .profile-page {
     display: flex;
     justify-content: center;
-    align-items: start;
-    margin-top: 20px;
-    width: 100%;
-    border: 1px solid #ccc;
-    background-color: #fff; /* fundal alb pentru vizibilitate */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* adaugă umbra pentru estetică */
+    align-items: flex-start;
+    width: 80%;
+    max-width: 1200px;
+    border: 1px solid rgba(204, 204, 204, 0.6); /* Bordură transparentă */
+    background-color: rgba(255, 255, 255, 0.9); /* Fundal aproape transparent */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 20px;
 }
 
 .profile-section {
-    flex: 1;
+    flex: 0 0 250px;
     padding: 20px;
-    margin-right: 20px; /* adaugă spațiu între secțiuni */
-    border: 1px solid #ccc;
-    background-color: #fff; /* fundal alb pentru vizibilitate */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* adaugă umbra pentru estetică */
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-}
-.profile-header {
-    display: flex;
-    align-items: center; 
-    justify-content: start; 
-    margin-right: 10px;
-}
-.content-section {
-    flex: 1;
-    padding: 20px;
-    border: 1px solid #ccc;
-    background-color: #fff;
+    border-right: 1px solid rgba(204, 204, 204, 0.6);
+    background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    min-height: 400px;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .profile-info {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    margin-right: 20px;
-    width: 300px;
+    width: 100%;
+    text-align: center;
 }
+
+.profile-info img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.profile-info p, .profile-info textarea {
+    margin: 10px 0;
+    width: 100%;
+}
+
 .button {
     display: inline-block;
     padding: 10px 20px;
-    margin: 10px 0;
     background-color: var(--color-option);
+    color: white;
     text-align: center;
-    width: 20%;
-    margin-left: 500px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
 }
 
 .button:hover {
     background-color: var(--color-option-dark);
 }
 
-
-#profilePicture {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-bottom: 20px;
-    margin-right: 10px;
+.content-section {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Adăugat pentru a împinge conținutul spre marginea de jos */
 }
 
-.profile-info h2, .profile-info p {
-    margin: 10px 0;
-}
-
-.profile-info textarea {
-    width: 100%;
-    height: 100px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 5px;
-}
 .tabs {
     display: flex;
     justify-content: space-around;
     border-bottom: 1px solid #ccc;
-    width: 100%;
+    margin-bottom: 10px;
 }
 
 .tab-link {
@@ -113,7 +96,6 @@ body {
 }
 
 .tab-content {
-    padding: 10px;
     display: none;
     width: 100%;
 }
@@ -122,13 +104,42 @@ body {
     display: block;
 }
 
-#firstName, #lastName{
-    display: inline;
-    margin-right: 5px;
-    margin-top: 10px;
+.slider-container {
+    overflow-y: auto;
+    max-height: 400px;
+    flex-grow: 1; /* Permite containerului să crească pentru a ocupa spațiul rămas */
 }
-#genderIcon {
-    width: 24px;  
-    height: 24px;
-    vertical-align: middle;  
+
+.slider-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.favorite-book {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(204, 204, 204, 0.6);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    padding: 10px;
+    width: 150px;
+}
+
+.favorite-book img {
+    width: 100%;
+    display: block;
+}
+
+.favorite-book p {
+    text-align: center;
+    padding: 5px;
+    margin: 0;
+}
+
+.favorite-book:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }

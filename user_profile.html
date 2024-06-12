@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
+    <title>Profilul meu</title>
     <link rel="stylesheet" href="user_profile.css">
     <script  type="module" src="user_profile.js"></script>
     <script type="module" src="./src/firebaseConfig.js" ></script>
@@ -11,37 +11,43 @@
 <body>
     <div class="profile-page">
         <div class="profile-section">
-            <div class="profile-header">
-            <img id="profilePicture" src="./src/default_user.png" alt="Profile Picture">
-            <h2 id="firstName"></h2>
-            <h2 id="lastName"></h2>
+            <!-- Informații despre utilizator -->
+            <div class="profile-info">
+                <h2>Informații Profil</h2>
+                <img id="profilePicture" src="./src/default_user.png" alt="Profile Picture">
+                <p id="username"></p>
+                <p id="firstName"></p>
+                <p id="lastName"></p>
+                <p id="email"></p>
+                <p id="address"></p>
+                <p id="birthdate"></p>
+                <img id="genderIcon" alt="Gen" src="">
+                <p id="genres"></p>
+                <textarea id="description" placeholder="Descriere utilizator"></textarea>
+                <button class="button" onclick="editProfile()">Editează Profil</button>
+            </div>
         </div>
-            <p><strong></strong> <span id="username"></span></p>
-            <p><strong>Email:</strong> <span id="email"></span></p>
-            <p><strong>Adresă:</strong> <span id="address"></span></p>
-            <p><strong>Data nașterii:</strong> <span id="birthdate"></span></p>
-            <p><strong>Gen:</strong> <img id="genderIcon" src="" alt="Gender icon" /></p>
-            <p><strong>Genuri preferate:</strong> <span id="genres"></span></p>
-            <p><strong>Descriere:</strong> <textarea id="description" readonly></textarea></p>
-           
-       
+        <div class="content-section">
+            <!-- Cărți favorite -->
+            <div class="tabs">
+                <button class="tab-link active" data-tab="Favorites">Cărți preferate</button>
+                <button class="tab-link" data-tab="Groups">Grupuri</button>
+            </div>
+            <div id="Favorites" class="tab-content active">
+                <div class="slider-container">
+                    <div id="FavoritesSlider" class="slider-content">
+                        <!-- Cărțile favorite vor fi afișate aici -->
+                    </div>
+                </div>
+            </div>
+            <div id="Groups" class="tab-content">
+                <!-- Conținutul pentru grupuri -->
+            </div>
+        </div>
     </div>
-    <div class="content-section">
-        <button class="button" href="edit_profile.html">Editează Profil</button>
-        <div class="tabs">
-            <button class="tab-link" onclick="openTab(event, 'Favorites')">Cărți preferate</button>
-            <button class="tab-link" onclick="openTab(event, 'Groups')">Grupuri</button>
-        </div>
-        <div id="Favorites" class="tab-content" style="display:none;">
-            <!-- Content for Favorites -->
-        </div>
-        <div id="Groups" class="tab-content" style="display:none;">
-            <!-- Content for Groups -->
-        </div>
-    </div>
-</div>
+
     <script src="./src/firebaseConfig.js"></script>
-    <script src="user_profile.js"></script>
+   
 </body>
 </html>
 

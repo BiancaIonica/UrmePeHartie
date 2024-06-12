@@ -1,0 +1,124 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0; /* Elimină marginile și padding-ul */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asigură că pagina ocupă toată înălțimea */
+}
+
+.forum-page {
+    flex: 1; /* Permite extinderea forumului */
+    width: 100%; /* Lățime completă */
+    background: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.forum-header {
+    background: #6c7ae0;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    background: #5a6abf;
+}
+
+.tab-link {
+    flex: 1;
+    padding: 15px;
+    cursor: pointer;
+    background: #5a6abf;
+    border: none;
+    color: white;
+    text-align: center;
+    transition: background 0.3s;
+}
+
+.tab-link.active, .tab-link:hover {
+    background: #4851a3;
+}
+
+.tab-content {
+    display: none;
+    padding: 20px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 15px;
+    background: #6c7ae0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #5a6abf;
+}
+
+.posts {
+    display: flex;
+    flex-direction: column-reverse; /* This will reverse the order of displayed posts */
+    overflow-y: auto; /* Enables vertical scrolling */
+    max-height: 500px; /* Adjust based on your preference */
+}
+
+
+.post {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+#postsContainer, #chatContainer {
+    margin-top: 20px;
+    overflow-y: auto; /* Adaugă scroll vertical dacă conținutul depășește înălțimea disponibilă */
+}
+
+.like-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.like-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+.like-count {
+    font-size: 16px;
+}
+
+footer {
+    background: #6c7ae0;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}

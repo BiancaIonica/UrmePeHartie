@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     if (user) {
       const userId = user.uid;
       const userRef = ref(database, "users/" + userId);
-      document.getElementById("menuGrupuri").style.display = "block";
+      document.getElementById("forum").style.display = "block";
       document.getElementById("menuBiblioteca").style.display = "block";
       get(userRef)
         .then((snapshot) => {
