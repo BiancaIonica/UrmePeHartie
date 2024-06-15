@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "bookpedia-3f12b"
-  }
+    "default": "bookpedia-3f12b",
+    "staging": "bookpedia-3f12b"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
 }

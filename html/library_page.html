@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliotecă</title>
+    <link rel="stylesheet" href="../css/library_page.css">
+    <script  type="module" src="../js/library_page.js"></script>
+    <script type="module" src="../src/firebaseConfig.js" ></script>
+</head>
+<body>
+    <h1>Cărțile tale favorite:</h1>
+    <div class="sort-search-container">
+        <div class="search-container">
+            <input type="text" id="searchBox" placeholder="Caută cărți...">
+        </div>
+        <div class="sort-container">
+            <label for="sortOptions">Sortează după:</label>
+            <select id="sortOptions">
+                <option value="title">Titlu</option>
+                <option value="genre">Gen</option>
+                <option value="author">Autor</option>
+            </select>
+        </div>
+    </div>
+      
+    <div id="favoriteBooksContainer"></div>
+        <div class="overlay">
+        
+            <div class="popup">
+                <h2>Confirmare</h2>
+                <p>Ești sigur că vrei să elimini această carte?</p>
+                <button class="ok-button">Da</button>
+                <button class="cancel-button">Anuleaza</button>
+            </div>
+        </div>
+    
+</body>
+</html>
+

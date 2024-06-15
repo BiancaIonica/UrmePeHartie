@@ -19,75 +19,171 @@
         </div>
         <div class="menu">
             <ul>
-                <li><a href="#Acasa">Acasă</a></li>
-                <li><a href="#Despre">Despre noi</a></li>
+                <li><a href="#home">Acasă</a></li>
+                <li><a href="#about">Despre noi</a></li>
                 <li class="dropdown">
                     <a href="#Carti">Cărți</a>
                     <div class="dropdown-content">
-                        <a href="booksbygenre.html?genre=nuvela">Nuvelă</a>
-                        <a href="booksbygenre.html?genre=fictiune-istorica">Ficțiune istorică</a>
-                        <a href="booksbygenre.html?genre=romantism">Romantism</a>
-                        <a href="booksbygenre.html?genre=clasic">Clasic</a>
+                        <a href="./html/booksbygenre.html?genre=nuvela">Nuvelă</a>
+                        <a href="./html/booksbygenre.html?genre=fictiune-istorica">Ficțiune istorică</a>
+                        <a href="./html/booksbygenre.html?genre=romantism">Romantism</a>
+                        <a href="./html/booksbygenre.html?genre=clasic">Clasic</a>
                     </div>
                 </li>
-                <li><a href="#AparitiiNoi">Apariții noi</a></li>
-                <li> <a href="forum_page.html" id="forum" style="display:none;">Forum</a></li>
-                <li></li> <a href="library_page.html" id="menuBiblioteca" style="display:none;">Bibliotecă</a></li>
+                <li><a href="#popular-categories">Categorii Populare</a></li>
+                <li> <a href="./html/forum_page.html" id="forum" style="display:none;">Forum</a></li>
+                <li></li> <a href="./html/library_page.html" id="menuBiblioteca" style="display:none;">Bibliotecă</a></li>
 
             </ul>
             <input type="search" placeholder="Caută cărți, autori..." class="search-input">
             <button class="search-btn">Caută</button>
         </div>
         <div class="prop-user">
-        <div class="user-menu">
-        <div class="user-icon">
-            <img id="userPhoto" src="./src/default_user.png" alt="User Photo" style="cursor: pointer;">
-        </div>    
-            <div id="userDropdown" class="user-dropdown-content">
-                <span id="username"> </span>
-                <li><img src="./src/profileIcon.png"><a href="/user_profile.html">Profilul Meu</a></li>
-                <li><img src="./src/settingsIcon.png"> <a href="/user_settings.html">Setări</a></li>
-                <div id="adminPanel" style="display:none;"> 
-                    <li><img src="./src/requestsIcon.png"><a href="/admin_requests.html">Cereri de acceptat</a></li>
-                    <li><img src="./src/usersIcon.png"><a href="/user_management.html">Gestionare Utilizatori</a></li>
+            <div class="user-menu">
+                <div class="user-icon">
+                    <img id="userPhoto" src="./src/default_user.png" alt="User Photo" style="cursor: pointer;">
+                </div>
+                <div id="userDropdown" class="user-dropdown-content">
+                    <span id="username"> </span>
+                    <li><img src="./src/profileIcon.png"><a href="./html/user_profile.html">Profilul Meu</a></li>
+                    <li><img src="./src/settingsIcon.png"> <a href="./html/user_settings.html">Setări</a></li>
+                        <div id="adminPanel" style="display:none;">
+                            <li><img src="./src/requestsIcon.png"><a href="./html/requests.html">Cereri de acceptat</a></li>
+                            <li><img src="./src/usersIcon.png"><a href="./html/users_management.html">Gestionare Utilizatori</a>
+                            </li>
+                        </div>
+                        
+                    <li><img src="./src/addbooksIcon.png"><a href="./html/bookupload.html">Adaugă o carte nouă</a>
+                        <li><img src="./src/editbookIcon.png"><a href="./html/genrepage.html">Editează cărți</a>
                 </div>
             </div>
-        </div>
-        <p class="form__text">
-            <a class="form__link" href="./" id="linkLogin">Autentificare</a>
-            <a class="form__link" href="./" id="linkLogout" style="display: none;">Deconectare</a>
-        </p>
+            <p class="form__text">
+                <a class="form__link" href="./" id="linkLogin">Autentificare</a>
+                <a class="form__link" href="./" id="linkLogout" style="display: none;">Deconectare</a>
+            </p>
         </div>
     </div>
 
-    <div class="container">
+    <div id="home" class="container">
         <h1 class="form__title">Explorați colecția noastră vastă de cărți</h1>
-        <div class="book-carousel">
+        <div class="book-carousel" style="position: relative;">
             <button class="carousel-button prev">❮</button>
             <div class="carousel-container">
-                <div id="nuvelă" class="categories-list"></div>
-                <div id="ficțiuneistorică" class="categories-list"></div>
-                <div id="clasic" class="categories-list"></div>
-                <div id="ficțiuneliterară" class="categories-list"></div>
-                <!-- Mai multe categorii -->
+                <div class="carousel-track"></div>
             </div>
             <button class="carousel-button next">❯</button>
         </div>
     </div>
 
 
-    <div class="book-categories">
+    <div id="popular-categories" class="popular-categories-section">
         <h2>Categorii Populare</h2>
-
+        <div class="popular-categories-list"></div>
     </div>
 
 
-    <div class="new-arrivals">
-        <h2>Noi Apariții</h2>
-        <div class="arrivals-grid">
-            <!-- Cărți individuale -->
+    <div id="about" class="about-us">
+        <h1>Despre Noi</h1>
+        <div class="about-us-content">
+            <section class="mission">
+                <h2>Misiunea Noastră</h2>
+                <p>La "Urme pe Hârtie", credem în puterea cărților de a transforma vieți și de a deschide noi
+                    orizonturi. Scopul nostru este să aducem lecturi de calitate la îndemâna tuturor, într-un mod
+                    accesibil și plăcut.</p>
+            </section>
+
+            <section class="history">
+                <h2>Istoria Noastră</h2>
+                <p>Fondat în 2023, "Urme pe Hârtie" a început ca un mic proiect de pasiune pentru literatură. De-a
+                    lungul timpului, am crescut și am devenit o comunitate vibrantă de cititori pasionați.</p>
+            </section>
+
+            <section class="team">
+                <h2>Echipa Noastră</h2>
+                <div class="team-members">
+                    <div class="team-member">
+                        <img src="team_member_1.jpg" alt="Member 1">
+                        <h3>Nume Membru 1</h3>
+                        <p>Fondator & CEO</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="team_member_2.jpg" alt="Member 2">
+                        <h3>Nume Membru 2</h3>
+                        <p>Director Editorial</p>
+                    </div>
+                    <!-- Adaugă mai mulți membri ai echipei după nevoie -->
+                </div>
+            </section>
+
+            <section class="publishing-process">
+                <h2>Procesul de Publicare</h2>
+                <p>Utilizatorii pot încărca propriile opere urmând acești pași simpli: creați un cont, încărcați opera,
+                    și respectați regulile comunității noastre. Echipa noastră va aproba opera în cel mai scurt timp.
+                </p>
+            </section>
+
+            <section class="statistics">
+                <h2>Statistici și Realizări</h2>
+                <p>Până acum, comunitatea noastră a încărcat peste 1.000 de cărți, iar site-ul nostru are peste 5.000 de
+                    utilizatori activi.</p>
+            </section>
+
+            <section class="community-authors">
+                <h2>Autorii Comunității</h2>
+                <div class="authors-list">
+                    <div class="author">
+                        <h3>Nume Autor 1</h3>
+                        <p>Biografie scurtă și linkuri către opere.</p>
+                    </div>
+                    <div class="author">
+                        <h3>Nume Autor 2</h3>
+                        <p>Biografie scurtă și linkuri către opere.</p>
+                    </div>
+                    <!-- Adaugă mai mulți autori după nevoie -->
+                </div>
+            </section>
+
+            <section class="partnerships">
+                <h2>Parteneriate și Colaborări</h2>
+                <p>Colaborăm cu numeroase edituri și autori celebri pentru a aduce cele mai bune cărți la îndemâna
+                    cititorilor noștri.</p>
+            </section>
+
+            <section class="user-guide">
+                <h2>Ghid pentru Noii Utilizatori</h2>
+                <p>Dacă ești nou pe site, citește acest ghid pentru a învăța cum să navighezi, să încarci cărți și să
+                    interacționezi cu alte opere.</p>
+            </section>
+
+            <section class="values">
+                <h2>Valorile Noastre</h2>
+                <ul>
+                    <li>Integritate</li>
+                    <li>Inovație</li>
+                    <li>Accesibilitate</li>
+                    <li>Comunitate</li>
+                </ul>
+            </section>
+
+            <section class="testimonials">
+                <h2>Ce Spun Utilizatorii Noștri</h2>
+                <blockquote>
+                    <p>"Urme pe Hârtie mi-a redeschis apetitul pentru lectură. Găsesc mereu cărți interesante și bine
+                        structurate!" - Andreea M.</p>
+                </blockquote>
+                <blockquote>
+                    <p>"Un site extraordinar pentru orice iubitor de cărți. Recomand cu drag!" - Ioan P.</p>
+                </blockquote>
+            </section>
+
+            <section class="contact">
+                <h2>Contactează-ne</h2>
+                <p>Ne poți trimite un mesaj la <a href="mailto:contact@urmepethartie.ro">contact@urmepethartie.ro</a>
+                    sau ne poți urmări pe rețelele sociale pentru cele mai noi actualizări.</p>
+            </section>
         </div>
     </div>
+
 
 
     <footer>
@@ -95,7 +191,7 @@
             <p>"A room without books is like a body without a soul." - Cicero</p>
         </div>
     </footer>
-    
+
 
 
     </div>

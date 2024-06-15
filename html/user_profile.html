@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilul meu</title>
+    <link rel="stylesheet" href="../css/user_profile.css">
+    <script  type="module" src="../js/user_profile.js"></script>
+    <script type="module" src="../src/firebaseConfig.js" ></script>
+</head>
+<body>
+    <div class="profile-page">
+        <div class="profile-section">
+            <!-- Informații despre utilizator -->
+            <div class="profile-info">
+                <h2>Informații Profil</h2>
+                <img id="profilePicture" src="../src/default_user.png" alt="Profile Picture">
+                <p id="username"></p>
+                <div class="profile-name">
+                    <span id="firstName"></span> <span id="lastName"></span>
+                </div>
+                <p id="email"></p>
+                <p id="address"></p>
+                <p id="birthdate"></p>
+                <img id="genderIcon" alt="Gen" src="">
+                <p id="genres"></p>
+                <textarea id="description" placeholder="Descriere utilizator"></textarea>
+                <button class="button" onclick="editProfile()">Editează Profil</button>
+            </div>
+        </div>
+        <div class="content-section">
+            <!-- Cărți favorite -->
+            <div class="tabs">
+                <button class="tab-link active" data-tab="Favorites">Cărți preferate</button>
+                <button class="tab-link" data-tab="Groups">Postări</button>
+            </div>
+            <div id="Favorites" class="tab-content active">
+                <div class="slider-container">
+                    <div id="FavoritesSlider" class="slider-content">
+                        <!-- Cărțile favorite vor fi afișate aici -->
+                    </div>
+                </div>
+            </div>
+            <div id="Posts" class="tab-content">
+                <!-- Conținutul pentru grupuri -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../src/firebaseConfig.js"></script>
+   
+</body>
+</html>
+
+

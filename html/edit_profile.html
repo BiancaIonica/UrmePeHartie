@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="../css/edit_profile.css">
+    <script type="module" src="../js/edit_profile.js"></script>
+    <script type="module" src="../src/firebaseConfig.js"></script>
+</head>
+
+<body>
+    <form class="profile-container-outer" id="profileForm">
+    <div class="profile-container-outer">
+        <div class="profile-container">
+            <div class="profile-details">
+
+                <label for="userName">Username:</label>
+                <input type="text" id="username" >
+
+                <label for="lastName">Nume:</label>
+                <input type="text" id="lastName">
+
+                <label for="firstName">Prenume:</label>
+                <input type="text" id="firstName" >
+
+                <label for="city">Oraș:</label>
+                <input type="text" id="city">
+                <label for="gender">Gen:</label>
+                <select id="gender">
+                    <option value="male">Masculin</option>
+                    <option value="female">Feminin</option>
+                </select>
+                <label for="birthdate">Data nașterii:</label>
+                <input type="date" id="birthdate">
+                <textarea id="description" placeholder="Descriere"></textarea>
+                <label for="genres">Genuri preferate:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="genres" value="Ficțiune"> Ficțiune</label>
+                    <label><input type="checkbox" name="genres" value="Non-ficțiune"> Non-ficțiune</label>
+                    <label><input type="checkbox" name="genres" value="Fantasy"> Fantasy</label>
+                    <label><input type="checkbox" name="genres" value="Sci-fi"> Sci-fi</label>
+                    <!-- Adăugați mai multe genuri după necesități -->
+                </div>
+                <label for="showFavorites">Afișează cărți preferate:</label>
+                <input type="checkbox" id="showFavorites">
+            </div>
+            <div class="profile-photo">
+                <label for="profilePicture">Poza de profil:</label>
+                <input type="file" id="profilePicture" accept="image/*">
+                <div id="preview" class="profile-picture-preview"></div>
+                <div class="form-actions">
+                    <button  id="uploadButton">Salvează Poza</button>
+                    <button type="submit">Salvează datele</button>
+                </div>
+            </div>
+            <div id="createPopup" class="popup-container" style="display: none;">
+                <div class="popup-content">
+                    <span id="createMessage"></span>
+                    <button type="button" class="close-button">Close</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    
+</form>
+</body>
+
+</html>

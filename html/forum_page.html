@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum</title>
+    <link rel="stylesheet" href="../css/forum_page.css">
+</head>
+<body>
+    <div class="forum-page">
+        <div class="forum-header">
+            <h1>Forum</h1>
+        </div>
+        <div class="tabs">
+            <button class="tab-link active" data-tab="Literature">Texte literare</button>
+            <button class="tab-link" data-tab="Poetry">Poezii</button>
+            <button class="tab-link" data-tab="Chat">Chat</button>
+        </div>
+        <div id="Literature" class="tab-content active">
+            <h2>Postează un text literar</h2>
+            <textarea id="LiteratureInput" placeholder="Scrie un text literar..."></textarea>
+            <button id="postLiteratureButton">Postează</button>
+            <div id="LiteraturePosts" class="posts"></div>
+        </div>
+        <div id="Poetry" class="tab-content">
+            <h2>Postează o poezie</h2>
+            <textarea id="PoetryInput" placeholder="Scrie o poezie..."></textarea>
+            <button id="postPoetryButton">Postează</button>
+            <div id="PoetryPosts" class="posts"></div>
+        </div>
+        <div id="Chat" class="tab-content">
+            <h2>Chat</h2>
+            <div id="ChatPosts" class="posts"></div>
+            <textarea id="ChatInput" placeholder="Scrie un mesaj..."></textarea>
+            <button id="postChatButton">Trimite</button>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Forum. All rights reserved.</p>
+    </footer>
+    <script type="module" src="../js/forum_page.js"></script>
+    <script type="module" src="../src/firebaseConfig.js"></script>
+</body>
+</html>

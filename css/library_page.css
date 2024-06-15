@@ -1,0 +1,160 @@
+body {
+    font-family: 'Quicksand', sans-serif;
+    --color-option: #9999FF;
+    --color-option-dark: #9966FF;
+    background: url(../src/background.jpg);
+  }
+#favoriteBooksContainer {
+    margin: auto;
+    width: 80%;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+#favoriteBooksContainer div {
+    background: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.book {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+
+.book a {
+    text-decoration: none; 
+    color: black; 
+    display: flex;
+    align-items: center;
+    flex-grow: 1; 
+}
+
+.book img {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.book-info h2 {
+    margin: 0; 
+    font-size: 18px;
+}
+
+.remove-button {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-start; 
+}
+
+.remove-button:hover {
+    background-color: #c82333;
+}
+.sort-search-container {
+    display: flex;
+    justify-content: flex-end; /* Aliniază la dreapta */
+    padding: 10px 20px; /* Spațiere generală */
+    max-width: 1200px; /* Limita de lățime */
+    margin: 20px auto; /* Centrat orizontal și spațiu vertical */
+}
+
+.sort-container,
+.search-container {
+    display: flex;
+    align-items: center;
+    margin-left: 20px; /* Spațiu între elemente */
+}
+
+#sortOptions,
+#searchBox {
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+}
+
+#sortOptions:hover,
+#searchBox:hover {
+    background-color: #e1e1e1;
+    transform: scale(1.05);
+}
+
+/* Folosește flex-grow pentru a permite elementelor să se extindă după necesitate */
+#searchBox {
+    flex-grow: 1;
+    width: 200px; /* Stabilește o lățime inițială */
+}
+
+
+button {
+    padding: 10px 20px;
+    margin-right: 10px;
+}
+/* Stiluri pentru overlay-ul care acoperă pagina când apare popup-ul */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asigurați-vă că overlay-ul este peste alte elemente */
+    visibility: hidden; /* Ascunde overlay-ul până când este nevoie de el */
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+
+.popup {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 300px;
+    transform: scale(0.9); /* Începe mai mic și animează la apariție */
+    transition: transform 0.3s;
+    z-index: 1010; /* Asigurați-vă că popup-ul este deasupra overlay-ului */
+    justify-content: center;
+    gap: 10px; /* Spațiu între butoane */
+}
+
+/* Stiluri pentru butoane */
+.popup button {
+    padding: 8px 16px;
+    margin: 10px;
+    border: none;
+    background-color: var(--color-option);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.popup button:hover {
+    background-color: var(--color-option-dark);
+}
+
+/* Clasa activă care va fi adăugată când popup-ul trebuie să fie vizibil */
+.overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup.active {
+    transform: scale(1); /* Animează la scala normală când este activ */
+}

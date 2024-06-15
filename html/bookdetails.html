@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Detail</title>
+    <link rel="stylesheet" href="../css/bookdetails.css">
+    <script  type="module" src="../js/bookdetails.js"></script>
+    <script type="module" src="../src/firebaseConfig.js" ></script>
+</head>
+<body>
+    <div id="bookDetails">
+        <div class="book-info">
+            <img id="coverImage" src="" alt="Book Cover"/>
+            <div class="text-info">
+                <div class="header">
+                    <h1 id="title"></h1>
+                    <button id="addToFavorites" class="button">
+                        <img src="../src/add_to_favorites.png" alt="Add to Favorites"  class="default-icon">
+                        <img src="../src/add_to_favorites_black.png" alt="Add to Favorites" class="hover-icon" >
+                      </button>  
+                </div>
+                <h2 id="author"></h2>
+                <p id="genre"></p>
+                <a id="downloadLink" href="#" >Descarcă PDF</a>
+                <a id="readPdf" href="#">Citește Cartea</a>
+                               
+            </div>
+        </div>
+        <p id="description"></p>
+    </div>
+    <script type="module" src="../src/firebaseConfig.js" ></script>
+</body>
+</html>

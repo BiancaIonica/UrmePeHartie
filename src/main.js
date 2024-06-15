@@ -6,16 +6,13 @@ import {
   auth,
   onAuthStateChanged,
   signOut,
-  database,
+  onValue
 } from "./firebaseConfig.js";
 
-document
-  .getElementById("linkLogin")
-  .addEventListener("click", function (event) {
-    event.preventDefault();
-
-    window.location.href = "login.html";
-  });
+document.getElementById("linkLogin").addEventListener("click", function (event) {
+  event.preventDefault();
+  window.location.href = "../html/login.html";
+});
 
 document.addEventListener("DOMContentLoaded", (event) => {
   const userMenu = document.getElementById('userDropdown');
@@ -27,13 +24,29 @@ document.addEventListener("DOMContentLoaded", (event) => {
     userMenu.style.display = (userMenu.style.display === 'flex') ? 'none' : 'flex';
   });
 
+  const prevButton = document.querySelector('.carousel-button.prev');
+  const nextButton = document.querySelector('.carousel-button.next');
+  const carousel = document.querySelector('.carousel-container');
 
+  prevButton.addEventListener('click', () => {
+    carousel.scrollBy({
+      left: -1000, // Adjust scroll amount to fit five items
+      behavior: 'smooth'
+    });
+  });
+
+  nextButton.addEventListener('click', () => {
+    carousel.scrollBy({
+      left: 1000, // Adjust scroll amount to fit five items
+      behavior: 'smooth'
+    });
+  });
 
   onAuthStateChanged(auth, (user) => {
     toggleAuthButtons(user);
     if (user) {
       const userId = user.uid;
-      const userRef = ref(database, "users/" + userId);
+      const userRef = ref(getDatabase(), "users/" + userId);
       document.getElementById("forum").style.display = "block";
       document.getElementById("menuBiblioteca").style.display = "block";
       get(userRef)
@@ -41,25 +54,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
           if (snapshot.exists()) {
             const userData = snapshot.val();
             console.log("User Data:", userData);
-            //ADMIN
-            const role = localStorage.getItem("role");
-            console.log(userData.role);
             if (userData.role === "admin") {
               document.getElementById("adminPanel").style.display = "block";
+            } else {
+              document.getElementById("adminPanel").style.display = "none";
             }
             if (userData.userName) {
-              console.log("Username:", userData.userName);
-              document.getElementById("username").textContent =
-                userData.userName;
-            } else {
-              console.log("Username not found in user data");
+              document.getElementById("username").textContent = userData.userName;
             }
-
             if (userData.photoURL) {
               document.getElementById("userPhoto").src = userData.photoURL;
-              console.log("Photo URL:", userData.photoURL);
-            } else {
-              console.log("No photo URL provided");
             }
           } else {
             console.log("No user data available");
@@ -69,46 +73,49 @@ document.addEventListener("DOMContentLoaded", (event) => {
           console.error("Error retrieving user data:", error);
         });
     } else {
-      console.log("No user logged in");
       document.getElementById("username").textContent = "Guest";
+      document.getElementById("adminPanel").style.display = "none";
     }
   });
 
-  function toggleAuthButtons(user) {
-    const loginLink = document.getElementById("linkLogin");
-    const logoutLink = document.getElementById("linkLogout");
-
-    if (user) {
-      loginLink.style.display = "none"; // Ascunde butonul de autentificare
-      logoutLink.style.display = "block"; // Arată butonul de deconectare
-    } else {
-      loginLink.style.display = "block"; // Arată butonul de autentificare
-      logoutLink.style.display = "none"; // Ascunde butonul de deconectare
-    }
-  }
   linkLogout.addEventListener("click", (event) => {
     event.preventDefault();
     signOut(auth)
       .then(() => {
-        console.log("Utilizatorul a fost deconectat");
+        console.log("User logged out");
         toggleAuthButtons(null);
-        localStorage.removeItem("userRole");
         window.location.href = "index.html";
       })
       .catch((error) => {
-        console.error("Eroare la deconectare", error);
+        console.error("Logout error", error);
       });
   });
 
   searchButton.addEventListener("click", () => {
-    // Obtine valoarea din inputul de cautare
     const searchInput = document.querySelector(".search-input").value;
-
-    //  cautare sau redirectionare catre o pagina cu cartile
-    console.log(`Cautare pentru: ${searchInput}`);
+    console.log(`Search for: ${searchInput}`);
     // window.location.href = `/search?query=${encodeURIComponent(searchInput)}`;
   });
 
+  loadBooks();
+
+  fetchBooks();
+});
+
+function toggleAuthButtons(user) {
+  const loginLink = document.getElementById("linkLogin");
+  const logoutLink = document.getElementById("linkLogout");
+
+  if (user) {
+    loginLink.style.display = "none";
+    logoutLink.style.display = "block";
+  } else {
+    loginLink.style.display = "block";
+    logoutLink.style.display = "none";
+  }
+}
+
+function loadBooks() {
   const dbRef = ref(getDatabase());
   get(child(dbRef, "books"))
     .then((snapshot) => {
@@ -116,78 +123,98 @@ document.addEventListener("DOMContentLoaded", (event) => {
       let htmlContent = "";
 
       if (snapshot.exists()) {
+        const books = [];
+
+        // Gather all books into an array with their genre and timestamp
         snapshot.forEach((childSnapshot) => {
           const book = childSnapshot.val();
+          book.id = childSnapshot.key;
+          books.push(book);
+        });
+
+        // Sort books by timestamp to get the latest ones first
+        books.sort((a, b) => b.timestamp - a.timestamp);
+
+        books.forEach((book) => {
           if (!booksAdded[book.genre]) {
             htmlContent += `
-                    <div class="book" data-book-id="${childSnapshot.key}">
-                    <div class="book-cover-container">      
-                            <img src="${book.coverUrl}" alt="${book.title} Cover" class="book-cover">
-                        <div class="genre-label">${book.genre}</div>
-                    </div>
+              <div class="carousel-item book" data-book-id="${book.id}">
+                <div class="book-cover-container">      
+                  <img src="${book.coverUrl}" alt="${book.title} Cover" class="book-cover">
+                  <div class="genre-label">${book.genre}</div>
                 </div>
-                    `;
-            booksAdded[book.genre] = true; //marcam genul ca vazut
+              </div>
+            `;
+            booksAdded[book.genre] = true;
           }
         });
 
-        document.querySelector(".carousel-container").innerHTML = htmlContent;
-        document
-          .querySelector(".carousel-container")
-          .addEventListener("click", function (event) {
-            if (event.target.classList.contains("book-cover")) {
-              const bookDiv = event.target.closest(".book");
-              const bookId = bookDiv.getAttribute("data-book-id");
-              console.log(`Selected book ID: ${bookId}`);
-              // window.location.href = `bookdetails.html?bookId=${pdfUrl}`;
-              window.location.href = `bookdetails.html?bookId=${encodeURIComponent(
-                bookId
-              )}`;
-              //window.open(pdfUrl, '_blank');
-            }
-          });
-      } else {
-        console.log("No data available");
-        document.querySelector(".carousel-container").innerHTML =
-          "<p>No books available.</p>";
-      }
-    })
-    .catch((error) => {
-      console.error("Failed to load books", error);
-      document.querySelector(
-        ".carousel-container"
-      ).innerHTML = `<p>Error loading books: ${error.message}</p>`;
-    });
-
-  let booksData = {}; // Store book data indexed by title
-
-  get(child(dbRef, "books"))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        console.log("Fetched Data:", snapshot.val());
-        snapshot.forEach((childSnapshot) => {
-          const book = childSnapshot.val();
-          booksData[book.title] = book;
+        document.querySelector(".carousel-track").innerHTML = htmlContent;
+        document.querySelector(".carousel-container").scrollLeft = 0;
+        document.querySelector(".carousel-container").addEventListener("click", function (event) {
+          if (event.target.classList.contains("book-cover")) {
+            const bookDiv = event.target.closest(".book");
+            const bookId = bookDiv.getAttribute("data-book-id");
+            console.log(`Selected book ID: ${bookId}`);
+            window.location.href = `../html/bookdetails.html?bookId=${encodeURIComponent(bookId)}`;
+          }
         });
       } else {
-        console.log("No books available.");
+        console.log("No data available");
+        document.querySelector(".carousel-track").innerHTML = "<p>No books available.</p>";
       }
     })
     .catch((error) => {
       console.error("Failed to load books", error);
+      document.querySelector(".carousel-track").innerHTML = `<p>Error loading books: ${error.message}</p>`;
     });
+}
 
-  document.querySelector(".prev").addEventListener("click", function () {
-    document.querySelector(".carousel-container").scrollBy({
-      left: -200, // Adjust scroll step size
-      behavior: "smooth",
+function fetchBooks() {
+  const booksRef = ref(getDatabase(), 'books');
+  onValue(booksRef, (snapshot) => {
+    const booksData = [];
+    snapshot.forEach((childSnapshot) => {
+      const book = childSnapshot.val();
+      book.id = childSnapshot.key;
+      booksData.push(book);
     });
+    console.log("Books data:", booksData);
+    displayPopularCategories(booksData);
+  });
+}
+
+function displayPopularCategories(booksData) {
+  const favoriteGenres = new Map();
+
+  booksData.forEach((book) => {
+    const genre = book.genre;
+    favoriteGenres.set(genre, (favoriteGenres.get(genre) || 0) + 1);
   });
 
-  document.querySelector(".next").addEventListener("click", function () {
-    document.querySelector(".carousel-container").scrollBy({
-      left: 200, // Adjust scroll step size
-      behavior: "smooth",
-    });
+  const sortedGenres = [...favoriteGenres.entries()].sort((a, b) => b[1] - a[1]);
+  const displayedGenres = new Set();
+
+  const popularCategoriesContainer = document.querySelector('.popular-categories-list');
+
+  popularCategoriesContainer.innerHTML = '';
+
+  sortedGenres.forEach(([genre, count], index) => {
+    if (displayedGenres.size < 3 && !displayedGenres.has(genre)) {
+      const book = booksData.find(b => b.genre === genre);
+      const bookElement = document.createElement('div');
+      bookElement.classList.add('popular-book-display');
+      bookElement.innerHTML = `
+        <div class="popular-book-cover-container" onclick="window.location.href='../html/booksbygenre.html?genre=${genre}'">
+          <img src="${book.coverUrl}" alt="${book.title}" class="popular-book-cover">
+          <p class="genre-label">${book.genre}</p>
+          <div class="podium-position">${index + 1}</div>
+        </div>
+      `;
+      popularCategoriesContainer.appendChild(bookElement);
+      displayedGenres.add(genre);
+    }
   });
-});
+
+  console.log("Displayed genres:", displayedGenres);
+}

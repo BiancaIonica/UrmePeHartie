@@ -1,16 +1,3 @@
-body {
-    font-family: 'Quicksand', sans-serif;
-    line-height: 1.6;
-    background: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    --color-option: #9999FF;
-    --color-option-dark: #9966FF;
-    background: url(background.jpg);
-}
-
-/* Stilurile pentru bara de navigație */
 .nav-bar {
     width: 98%; /* Lățime mai mică */
     display: flex;
@@ -158,9 +145,6 @@ body {
     display: none;
 }
 
-#adminPanel.visible {
-    display: flex;
-}
 
 #userDropdown.visible {
     display: flex;
@@ -170,9 +154,113 @@ body {
     display: block;
 }
 
+.button {
+    display: inline-block;
+    padding: 10px 15px;
+    margin-top: 15px;
+    background-color: var(--color-option);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: var(--color-option-dark);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+
+.search-input {
+    padding: 10px;
+    margin-left: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-btn {
+    padding: 10px 20px;
+    margin-left: 5px;
+    background-color: var(--color-option);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+    background-color: var(--color-option-dark);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+    padding: 10px 0;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+@media (max-width: 600px) {
+
+    .nav-bar .menu {
+        flex-direction: column;
+    }
+}
+
+.highlight {
+    animation: highlightEffect 1s ease-in-out;
+}
+
+@keyframes highlightEffect {
+    0% { background-color: var(--color-option); }
+    100% { background-color: transparent; }
+}
+body {
+    font-family: 'Quicksand', sans-serif;
+    line-height: 1.6;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    --color-option: #9999FF;
+    --color-option-dark: #9966FF;
+    background: url('background.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+/* Stilurile pentru bara de navigație */
+
+
 .container {
     width: 85%;
-    margin: 80px auto 20px auto; /* Adjusted margin-top for fixed navbar */
+    margin: 80px auto 20px auto; 
     padding: 20px;
     background: white;
     border-radius: 10px;
@@ -202,31 +290,7 @@ p {
     margin-bottom: 15px;
 }
 
-.search-input {
-    padding: 10px;
-    margin-left: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
 
-.search-btn {
-    padding: 10px 20px;
-    margin-left: 5px;
-    background-color: var(--color-option);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.search-btn:hover {
-    background-color: var(--color-option-dark);
-}
-
-.book-carousel {
-    margin-top: 20px;
-}
 
 .book-categories {
     margin-top: 40px;
@@ -316,17 +380,6 @@ footer p {
     }
 }
 
-.book-carousel {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-}
-
-.carousel-container {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-}
 
 .category-container {
     margin: 20px 0;
@@ -356,6 +409,7 @@ footer p {
     align-items: center;
     margin: 10px;
     text-align: center;
+    cursor: pointer;
 }
 
 .genre-label {
@@ -365,17 +419,6 @@ footer p {
     font-weight: bold;
 }
 
-.carousel-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: #ddd;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    z-index: 100;
-    border-radius: 50%;
-}
 
 .prev {
     left: 10px;
@@ -385,29 +428,244 @@ footer p {
     right: 10px;
 }
 
-.dropdown {
+
+.popular-categories-section {
+    margin-top: 40px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 85%;
+    margin: 80px auto 20px auto; 
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+}
+.popular-categories-list {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Aliniem la partea de jos pentru efectul de podium */
+    padding: 20px;
+}
+
+.popular-categories-list {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.popular-book-cover-container {
     position: relative;
-    display: inline-block;
+    transition: transform 0.3s;
+    cursor: pointer;
+    text-align: center;
+    margin: 0 10px;
 }
 
-.dropdown-content {
-    display: none;
+.popular-book-cover-container:nth-child(1) {
+    transform: translateY(20px) scale(0.9) rotateY(20deg);
+}
+
+.popular-book-cover-container:nth-child(2) {
+    transform: translateY(0px) scale(1) rotateY(0deg);
+}
+
+.popular-book-cover-container:nth-child(3) {
+    transform: translateY(20px) scale(0.9) rotateY(-20deg);
+}
+
+.popular-book-cover-container:hover {
+    transform: scale(1.1);
+}
+
+.popular-book-cover {
+    width: 150px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+
+
+.podium-position {
     position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: 5px;
-    padding: 10px 0;
-}
-
-.dropdown-content a {
+    top: -10px;
+    right: -10px;
+    background: rgb(197, 141, 235);
     color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 16px;
 }
 
-.dropdown:hover .dropdown-content {
-    display: block;
+
+.about-us {
+    
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 85%;
+    margin: 80px auto 20px auto; 
+    padding: 20px;
+}
+
+.about-us h1, .about-us h2 {
+    color: #333;
+    text-align: center;
+}
+
+.about-us-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-us p, .about-us ul {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.team-members {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.team-member {
+    text-align: center;
+    margin: 20px;
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.values ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.values li {
+    background: #f0f0f0;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.testimonials blockquote {
+    background: #f9f9f9;
+    border-left: 5px solid var(--color-option);
+    margin: 20px 0;
+    padding: 10px 20px;
+    quotes: "“" "”" "‘" "’";
+}
+
+.testimonials blockquote p {
+    display: inline;
+}
+
+.contact a {
+    color: var(--color-option);
+    text-decoration: none;
+}
+
+.contact a:hover {
+    text-decoration: underline;
+}
+
+.authors-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.author {
+    text-align: center;
+    margin: 20px;
+    background: #f0f0f0;
+    padding: 10px;
+    border-radius: 10px;
+    width: 200px;
+}
+
+.author h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.author p {
+    color: #555;
+}
+
+.publishing-process, .statistics, .partnerships, .user-guide {
+    margin: 20px 0;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.book-cover-container {
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.carousel-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    width: 1000px; /* Fixed width to show only 5 items */
+    margin: 0 auto;
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 10px;
+}
+
+.carousel-item {
+    min-width: 200px; /* Width of each item */
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    text-align: center;
+}
+
+.carousel-button {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    font-size: 2em;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.carousel-button.prev {
+    left: 0;
+}
+
+.carousel-button.next {
+    right: 0;
+}
+
+/* Hide scrollbar */
+.carousel-container::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }

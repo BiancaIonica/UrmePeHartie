@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  h1 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .request {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .request h2 {
+    margin-top: 0;
+  }
+  
+  .request p {
+    margin: 5px 0;
+  }
+  
+  .request a {
+    color: #007BFF;
+    text-decoration: none;
+  }
+  
+  .request a:hover {
+    text-decoration: underline;
+  }
+  
+  .request button {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .request button:hover {
+    background-color: #218838;
+  }
+
+  .buttons .approve-btn {
+    background-color: #28a745;
+    color: white;
+  }
+  .buttons .reject-btn {
+    background-color: #dc3545;
+    color: white;
+  }
