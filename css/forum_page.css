@@ -6,11 +6,18 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* Asigură că pagina ocupă toată înălțimea */
+    --color-option: #9999FF;
+    --color-option-dark: #9966FF;
 }
-
+.header img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background: transparent;
+}
 .forum-page {
-    flex: 1; /* Permite extinderea forumului */
-    width: 100%; /* Lățime completă */
+    flex: 1; 
+    width: 100%; 
     background: white;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 10px;
@@ -18,11 +25,11 @@ body {
 }
 
 .forum-header {
-    background: #6c7ae0;
+    background: var(--color-option);
     color: white;
-    padding: 20px;
+    padding: 1px;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 
 .tabs {
@@ -81,7 +88,7 @@ button:hover {
     display: flex;
     flex-direction: column-reverse; /* This will reverse the order of displayed posts */
     overflow-y: auto; /* Enables vertical scrolling */
-    max-height: 500px; /* Adjust based on your preference */
+    max-height: 300px; /* Adjust based on your preference */
 }
 
 
@@ -120,7 +127,7 @@ button:hover {
 }
 
 footer {
-    background: #6c7ae0;
+    background: var(--color-option);
     color: white;
     text-align: center;
     padding: 10px;

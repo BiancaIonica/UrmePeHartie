@@ -18,36 +18,33 @@ function parseFilename(filename) {
 
   if (dashIndex === -1) {
     console.error('Filename format incorrect, should be "Author - Title.pdf"');
-    return { author: "Unknown", title: "Untitled" };
+    return { author: "Unknown", title: "Untitled", valid: false };
   }
 
   const author = cleanedFilename.substring(0, dashIndex);
   const title = cleanedFilename.substring(dashIndex + 3); // +3 to remove ' - ' part
-  return { author, title };
+  return { author, title, valid: true };
 }
 
 // Function to upload the book and cover
 async function uploadBookAndCover(pdfFile, coverFile, userRole, userEmail) {
-  console.log(`Uploading with user role: ${userRole}`);
-  console.log(`PDF file: ${pdfFile.name}`);
-  console.log(`Cover file: ${coverFile.name}`);
+  const fileInfo = parseFilename(pdfFile.name);
+  if (!fileInfo.valid) {
+    showPopup('Formatul fișierului nu este corect! Ar trebui: "Autor - Titlul cărții.pdf"');
+    clearInputs();
+    return;
+  }
 
   const storageLocation = userRole === "admin" ? "pdf" : "pending/pdf";
   const coverLocation = userRole === "admin" ? "covers" : "pending/covers";
   const pdfRef = storageRef(storage, `${storageLocation}/${pdfFile.name}`);
   const coverRef = storageRef(storage, `${coverLocation}/${coverFile.name}`);
 
-  const fileInfo = parseFilename(pdfFile.name);
-
   try {
     const pdfSnapshot = await uploadBytes(pdfRef, pdfFile);
     const pdfUrl = await getDownloadURL(pdfSnapshot.ref);
-    console.log(`PDF uploaded to ${pdfUrl}`);
-
     const coverSnapshot = await uploadBytes(coverRef, coverFile);
     const coverUrl = await getDownloadURL(coverSnapshot.ref);
-    console.log(`Cover uploaded to ${coverUrl}`);
-
     const bookId = fileInfo.title.replace(/\s+/g, '_').toLowerCase();
     const booksRef = databaseRef(database, userRole === "admin" ? `books/${bookId}` : `pending_books/${bookId}`);
     await set(booksRef, {
@@ -56,9 +53,7 @@ async function uploadBookAndCover(pdfFile, coverFile, userRole, userEmail) {
       pdfUrl: pdfUrl,
       coverUrl: coverUrl,
     });
-    console.log(`Book record created for ${bookId}`);
-
-    console.log("Book and cover uploaded successfully!");
+    console.log(`O nouă modificare în baza de date pentru ${bookId}`);
     if (userRole !== "admin") {
       await sendApprovalRequest(fileInfo.title, fileInfo.author, pdfUrl, coverUrl, userEmail);
       showPopup("Cerere trimisă către un administrator.");
@@ -67,7 +62,6 @@ async function uploadBookAndCover(pdfFile, coverFile, userRole, userEmail) {
     }
     clearInputs();
   } catch (error) {
-    console.error("Error in uploadBookAndCover function:", error);
     showPopup("Eroare la încărcare: " + error.message);
     clearInputs();
   }

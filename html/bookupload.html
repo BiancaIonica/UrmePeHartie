@@ -11,19 +11,19 @@
 <body>
     <div class="upload-container">
         <div class="file-input-container">
-            <label for="pdfInput">Choose your PDF file in this format: "Author - Book Name.pdf"</label>
+            <label for="pdfInput">Alegeți un fișier sub următorul format: "Autor - Titlul cărții.pdf"</label>
             <input type="file" id="fileInput" multiple accept=".pdf">
         </div>
         <div id="fileDragArea" class="drag-area" onclick="document.getElementById('fileInput').click();">Drag pdf files here or click to select files</div>
         <div class="file-input-container">
-            <label for="coverInput">Choose your cover image:</label>
+            <label for="coverInput">Alegeți imaginea de copertă:</label>
             <input type="file" id="coverInput" accept="image/*">
         </div>
-        <button id="uploadButton">Upload PDF & Cover</button>
+        <button id="uploadButton">Încărcați fișiere</button>
         <div id="uploadPopup" class="popup-container" style="display: none;">
             <div class="popup-content">
                 <span id="uploadMessage"></span>
-                <button type="button" class="close-button">Close</button>
+                <button type="button" class="close-button">Închide</button>
             </div>
         </div>
     </div>

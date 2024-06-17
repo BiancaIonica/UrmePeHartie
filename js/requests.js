@@ -6,14 +6,21 @@ import {
   deleteObject,
   uploadBytes,
   database,
+  getDatabase,
   ref,
   get,
   set,
   remove,
-  onAuthStateChanged
+  onAuthStateChanged,
 } from "../src/firebaseConfig.js";
 
-// Function to display approval requests
+document
+  .getElementById("linkLogin")
+  .addEventListener("click", function (event) {
+    event.preventDefault();
+    window.location.href = "../html/login.html";
+  });
+
 async function displayApprovalRequests() {
   const requestsContainer = document.getElementById("requestsContainer");
   const approvalRequestsRef = ref(database, "approval_requests");
@@ -22,7 +29,7 @@ async function displayApprovalRequests() {
     const snapshot = await get(approvalRequestsRef);
     if (snapshot.exists()) {
       const requests = snapshot.val();
-      requestsContainer.innerHTML = ''; // Clear existing requests
+      requestsContainer.innerHTML = ""; // Clear existing requests
       for (const requestId in requests) {
         const request = requests[requestId];
         const requestElement = document.createElement("div");
@@ -30,15 +37,27 @@ async function displayApprovalRequests() {
         requestElement.innerHTML = `
         <div class="request-details">
         <h2>${request.title}</h2>
-        <p><strong>Author:</strong> ${request.author}</p>
+        <p><strong>Autor:</strong> ${request.author}</p>
         <p><strong>Email:</strong> ${request.email}</p>
-        <p><strong>PDF:</strong> <a href="${request.pdfUrl}" target="_blank">View PDF</a></p>
-        <p><strong>Cover:</strong> <a href="${request.coverUrl}" target="_blank">View Cover</a></p>
-        <p><strong>Timestamp:</strong> ${new Date(request.timestamp).toLocaleString()}</p>
+        <p><strong>PDF:</strong> <a href="${
+          request.pdfUrl
+        }" target="_blank">Citește PDF</a></p>
+        <p><strong>Copertă:</strong> <a href="${
+          request.coverUrl
+        }" target="_blank">Vizualizează Copertă</a></p>
+        <p><strong>Timestamp:</strong> ${new Date(
+          request.timestamp
+        ).toLocaleString()}</p>
       </div>
       <div class="buttons">
-        <button class="approve-btn" onclick="approveRequest('${requestId}', '${request.title}', '${request.author}', '${request.pdfUrl}', '${request.coverUrl}', '${request.email}')">Approve</button>
-        <button class="reject-btn" onclick="rejectRequest('${requestId}', '${request.pdfUrl}', '${request.coverUrl}', '${request.email}')">Reject</button>
+        <button class="approve-btn" onclick="approveRequest('${requestId}', '${
+          request.title
+        }', '${request.author}', '${request.pdfUrl}', '${request.coverUrl}', '${
+          request.email
+        }')">Acceptă</button>
+        <button class="reject-btn" onclick="rejectRequest('${requestId}', '${
+          request.pdfUrl
+        }', '${request.coverUrl}', '${request.email}')">Respinge</button>
       </div>
     `;
         requestsContainer.appendChild(requestElement);
@@ -48,38 +67,37 @@ async function displayApprovalRequests() {
     }
   } catch (error) {
     console.error("Error fetching approval requests:", error);
-    requestsContainer.innerHTML = "<p>Error loading approval requests. Please try again later.</p>";
+    requestsContainer.innerHTML =
+      "<p>Error loading approval requests. Please try again later.</p>";
   }
 }
 
-// Function to approve a request
-async function approveRequest(requestId, title, author, pdfUrl, coverUrl, userEmail) {
+async function approveRequest(
+  requestId,
+  title,
+  author,
+  pdfUrl,
+  coverUrl,
+  userEmail
+) {
   try {
-    const formattedTitle = `${title}`.replace(/\s+/g, '_').toLowerCase();
-
-    // Get the storage refs for pending files
+    const formattedTitle = `${title}`.replace(/\s+/g, "_").toLowerCase();
     const pdfRefPending = storageRef(storage, pdfUrl);
     const coverRefPending = storageRef(storage, coverUrl);
-
-    // Get the storage refs for final locations
     const pdfRef = storageRef(storage, `pdf/${formattedTitle}.pdf`);
     const coverRef = storageRef(storage, `covers/${formattedTitle}.jpg`);
 
-    // Fetch PDF and cover blobs from pending locations
-    const pdfBlob = await fetch(pdfUrl).then(res => res.blob());
-    const coverBlob = await fetch(coverUrl).then(res => res.blob());
+    const pdfBlob = await fetch(pdfUrl).then((res) => res.blob());
+    const coverBlob = await fetch(coverUrl).then((res) => res.blob());
 
-    // Move PDF file to final location
     await uploadBytes(pdfRef, pdfBlob);
     const newPdfUrl = await getDownloadURL(pdfRef);
     await deleteObject(pdfRefPending);
 
-    // Move cover file to final location
     await uploadBytes(coverRef, coverBlob);
     const newCoverUrl = await getDownloadURL(coverRef);
     await deleteObject(coverRefPending);
 
-    // Update database
     const bookId = formattedTitle;
     const booksRef = ref(database, `books/${bookId}`);
     await set(booksRef, {
@@ -91,7 +109,12 @@ async function approveRequest(requestId, title, author, pdfUrl, coverUrl, userEm
 
     // Update status to approved before removal
     const requestRef = ref(database, `approval_requests/${requestId}`);
-    await set(requestRef, { status: 'approved', email: userEmail, title, author });
+    await set(requestRef, {
+      status: "approved",
+      email: userEmail,
+      title,
+      author,
+    });
     await remove(requestRef);
 
     // Refresh the request list
@@ -115,7 +138,12 @@ async function rejectRequest(requestId, pdfUrl, coverUrl, userEmail) {
 
     // Update status to rejected before removal
     const requestRef = ref(database, `approval_requests/${requestId}`);
-    await set(requestRef, { status: 'rejected', email: userEmail, title, author });
+    await set(requestRef, {
+      status: "rejected",
+      email: userEmail,
+      title,
+      author,
+    });
     await remove(requestRef);
 
     // Refresh the request list
@@ -128,17 +156,56 @@ async function rejectRequest(requestId, pdfUrl, coverUrl, userEmail) {
 
 // Check if a user is logged in and display approval requests
 onAuthStateChanged(auth, async (user) => {
+  toggleAuthButtons(user);
   if (user) {
+    const userId = user.uid;
+    const userRef = ref(getDatabase(), "users/" + userId);
+    document.getElementById("forum").style.display = "block";
+    document.getElementById("menuBiblioteca").style.display = "block";
+    get(userRef)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const userData = snapshot.val();
+          console.log("User Data:", userData);
+          if (userData.role === "admin") {
+            document.getElementById("adminPanel").style.display = "block";
+          } else {
+            document.getElementById("adminPanel").style.display = "none";
+          }
+          if (userData.userName) {
+            document.getElementById("username").textContent = userData.userName;
+          }
+          if (userData.photoURL) {
+            document.getElementById("userPhoto").src = userData.photoURL;
+          }
+        } else {
+          console.log("No user data available");
+        }
+      })
+      .catch((error) => {
+        console.error("Error retrieving user data:", error);
+      });
     console.log(`User logged in: ${user.uid}`);
     displayApprovalRequests();
   } else {
-    document.body.innerHTML = "<h1>Access Denied</h1><p>You must be logged in to view this page.</p>";
+    document.body.innerHTML =
+      "<h1>Access Denied</h1><p>You must be logged in to view this page.</p>";
+    document.getElementById("username").textContent = "Guest";
+    document.getElementById("adminPanel").style.display = "none";
   }
 });
 
 // Display approval requests on page load if the user is already logged in
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM fully loaded and parsed");
+  const userMenu = document.getElementById("userDropdown");
+  const userIcon = document.getElementById("userPhoto");
+  const linkLogout = document.getElementById("linkLogout");
+
+  userIcon.addEventListener("click", () => {
+    userMenu.style.display =
+      userMenu.style.display === "flex" ? "none" : "flex";
+  });
 
   const currentUser = auth.currentUser;
   if (currentUser) {
@@ -148,7 +215,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (user) {
         displayApprovalRequests();
       } else {
-        document.body.innerHTML = "<h1>Access Denied</h1><p>You must be logged in to view this page.</p>";
+        document.body.innerHTML =
+          "<h1>Access Denied</h1><p>You must be logged in to view this page.</p>";
       }
     });
   }
@@ -157,3 +225,15 @@ document.addEventListener("DOMContentLoaded", () => {
 // Expose the approveRequest and rejectRequest functions to the global scope so they can be used in the onclick handlers
 window.approveRequest = approveRequest;
 window.rejectRequest = rejectRequest;
+function toggleAuthButtons(user) {
+  const loginLink = document.getElementById("linkLogin");
+  const logoutLink = document.getElementById("linkLogout");
+
+  if (user) {
+    loginLink.style.display = "none";
+    logoutLink.style.display = "block";
+  } else {
+    loginLink.style.display = "block";
+    logoutLink.style.display = "none";
+  }
+}

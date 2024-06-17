@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 
 exports.sendApprovalEmail = functions.database
   .ref('/approval_requests/{requestId}')
-  .onDelete(async (snapshot) => { // Eliminat context, deoarece nu este utilizat
+  .onDelete(async (snapshot) => { 
     const requestData = snapshot.val();
     const status = requestData.status;
     const userEmail = requestData.email;

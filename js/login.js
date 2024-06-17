@@ -188,8 +188,6 @@ closeButton.addEventListener('click', closePopup);
       if (isEmail(userInput)) {
         authenticateUser(userInput);
       } else {
-        // search for the relation between email adress and username in database
-        //hard for optimization!!!!!!
         const usersRef = ref(database, "users");
         get(usersRef)
           .then((snapshot) => {

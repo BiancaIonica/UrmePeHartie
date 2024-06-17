@@ -1,5 +1,8 @@
-import { getAuth, getDatabase, ref, onValue, onAuthStateChanged, get } from "../src/firebaseConfig.js";
-
+import { getAuth, getDatabase, ref, onValue, onAuthStateChanged, get, auth } from "../src/firebaseConfig.js";
+document.getElementById("linkLogin").addEventListener("click", function (event) {
+    event.preventDefault();
+    window.location.href = "../html/login.html";
+  });
 function openTab(evt, tabName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tab-content");
@@ -18,14 +21,63 @@ function openTab(evt, tabName) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    const userMenu = document.getElementById('userDropdown');
+  const userIcon = document.getElementById('userPhoto');
+  const searchButton = document.querySelector(".search-btn");
+  const linkLogout = document.getElementById("linkLogout");
+
+  userIcon.addEventListener("click", () => {
+    userMenu.style.display = (userMenu.style.display === 'flex') ? 'none' : 'flex';
+  });
+  
+
+  linkLogout.addEventListener("click", (event) => {
+    event.preventDefault();
+    signOut(auth)
+      .then(() => {
+        console.log("User logged out");
+        toggleAuthButtons(null);
+        window.location.href = "index.html";
+      })
+      .catch((error) => {
+        console.error("Logout error", error);
+      });
+  });
+
     const auth = getAuth();
     const database = getDatabase();
 
     onAuthStateChanged(auth, user => {
+      toggleAuthButtons(user);
         if (user) {
             console.log('Utilizator conectat:', user);
             const userRef = ref(database, 'users/' + user.uid);
-
+            const userId = user.uid;
+            document.getElementById("forum").style.display = "block";
+            document.getElementById("menuBiblioteca").style.display = "block";
+            get(userRef)
+              .then((snapshot) => {
+                if (snapshot.exists()) {
+                  const userData = snapshot.val();
+                  console.log("User Data:", userData);
+                  if (userData.role === "admin") {
+                    document.getElementById("adminPanel").style.display = "block";
+                  } else {
+                    document.getElementById("adminPanel").style.display = "none";
+                  }
+                  if (userData.userName) {
+                    document.getElementById("username").textContent = userData.userName;
+                  }
+                  if (userData.photoURL) {
+                    document.getElementById("userPhoto").src = userData.photoURL;
+                  }
+                } else {
+                  console.log("No user data available");
+                }
+              })
+              .catch((error) => {
+                console.error("Error retrieving user data:", error);
+              });
             onValue(userRef, (snapshot) => {
                 const userData = snapshot.val();
                 if (userData) {
@@ -54,6 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } else {
             console.log('Niciun utilizator conectat');
+            document.getElementById("username").textContent = "Guest";
+            document.getElementById("adminPanel").style.display = "none";
         }
     });
 
@@ -113,3 +167,15 @@ function loadFavorites(userId) {
         }
     });
 }
+function toggleAuthButtons(user) {
+    const loginLink = document.getElementById("linkLogin");
+    const logoutLink = document.getElementById("linkLogout");
+  
+    if (user) {
+      loginLink.style.display = "none";
+      logoutLink.style.display = "block";
+    } else {
+      loginLink.style.display = "block";
+      logoutLink.style.display = "none";
+    }
+  }

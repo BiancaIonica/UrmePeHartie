@@ -9,7 +9,55 @@
   <script  type="module" src="../js/requests.js"></script>
 </head>
 <body>
-  <h1>Cereri de aprobat</h1>
+  <div class="nav-bar">
+    <div class="logo">
+        <img src="../src/logo.png" alt="Urme pe Hârtie">
+    </div>
+    <div class="menu">
+        <ul>
+            <li><a href="#home">Acasă</a></li>
+            <li><a href="#about">Despre noi</a></li>
+            <li class="dropdown">
+                <a href="#Carti">Cărți</a>
+                <div class="dropdown-content">
+                    <a href="../html/booksbygenre.html?genre=nuvela">Nuvelă</a>
+                    <a href="../html/booksbygenre.html?genre=fictiune-istorica">Ficțiune istorică</a>
+                    <a href="../html/booksbygenre.html?genre=romantism">Romantism</a>
+                    <a href="../html/booksbygenre.html?genre=clasic">Clasic</a>
+                </div>
+            </li>
+            <li><a href="#popular-categories">Categorii Populare</a></li>
+            <li> <a href="../html/forum_page.html" id="forum" style="display:none;">Forum</a></li>
+            <li></li> <a href="../html/library_page.html" id="menuBiblioteca" style="display:none;">Bibliotecă</a></li>
+
+        </ul>
+    </div>
+    <div class="prop-user">
+        <div class="user-menu">
+            <div class="user-icon">
+                <img id="userPhoto" src="../src/default_user.png" alt="User Photo" style="cursor: pointer;">
+            </div>
+            <div id="userDropdown" class="user-dropdown-content">
+                <span id="username"> </span>
+                <li><img src="../src/profileIcon.png"><a href="../html/user_profile.html">Profilul Meu</a></li>
+                <li><img src="../src/settingsIcon.png"> <a href="../html/user_settings.html">Setări</a></li>
+                    <div id="adminPanel" style="display:none;">
+                        <li><img src="../src/requestsIcon.png"><a href="../html/requests.html">Cereri de acceptat</a></li>
+                        <li><img src="../src/usersIcon.png"><a href="../html/users_management.html">Gestionare Utilizatori</a>
+                        </li>
+                    </div>
+                    
+                <li><img src="../src/addbooksIcon.png"><a href="../html/bookupload.html">Adaugă o carte nouă</a>
+                    <li><img src="../src/editbookIcon.png"><a href="../html/genrepage.html">Editează cărți</a>
+            </div>
+        </div>
+        <p class="form__text">
+            <a class="form__link" href="./" id="linkLogin">Autentificare</a>
+            <a class="form__link" href="./" id="linkLogout" style="display: none;">Deconectare</a>
+        </p>
+    </div>
+</div>
+  <h1 id="title">Cereri de aprobat</h1>
   <div id="requestsContainer"></div>
 
   <script src="../js/requests.js"></script> <!-- Link to your JavaScript file -->
