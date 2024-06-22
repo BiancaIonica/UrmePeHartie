@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profilul meu</title>
     <link rel="stylesheet" href="../css/user_profile.css">
+    <link rel="icon" href="../src/lavender.ico" type="image/x-icon">
     <script  type="module" src="../js/user_profile.js"></script>
     <script type="module" src="../src/firebaseConfig.js" ></script>
 </head>
@@ -12,7 +13,7 @@
     <div class="nav-bar">
         <div class="logo">
             <img src="../src/logo.png" alt="Urme pe Hârtie">
-        </div>
+        </div> 
         <div class="menu">
             <ul>
                 <li><a href="#home">Acasă</a></li>
@@ -60,7 +61,6 @@
     </div>
     <div class="profile-page">
         <div class="profile-section">
-            <!-- Informații despre utilizator -->
             <div class="profile-info">
                 <h2>Informații Profil</h2>
                 <img id="profilePicture" src="../src/default_user.png" alt="Profile Picture">
@@ -81,7 +81,7 @@
             <!-- Cărți favorite -->
             <div class="tabs">
                 <button class="tab-link active" data-tab="Favorites">Cărți preferate</button>
-                <button class="tab-link" data-tab="Groups">Postări</button>
+                <button class="tab-link" data-tab="Posts">Postări</button>
             </div>
             <div id="Favorites" class="tab-content active">
                 <div class="slider-container">

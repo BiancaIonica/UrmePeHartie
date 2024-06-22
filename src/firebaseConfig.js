@@ -1,5 +1,3 @@
-
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import { getAuth, signOut, sendPasswordResetEmail, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged , deleteUser, updateEmail, updatePassword, updateProfile, EmailAuthProvider, reauthenticateWithCredential, verifyBeforeUpdateEmail} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
 import { getDatabase, ref, set, get, onValue, child, push, update, remove } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";

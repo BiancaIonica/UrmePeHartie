@@ -32,11 +32,17 @@
                 </li>
                 <li><a href="#popular-categories">Categorii Populare</a></li>
                 <li> <a href="./html/forum_page.html" id="forum" style="display:none;">Forum</a></li>
-                <li></li> <a href="./html/library_page.html" id="menuBiblioteca" style="display:none;">Bibliotecă</a></li>
+                <li></li> <a href="./html/library_page.html" id="menuBiblioteca" style="display:none;">Bibliotecă</a>
+                </li>
 
             </ul>
-            <input type="search" placeholder="Caută cărți, autori..." class="search-input">
-            <button class="search-btn">Caută</button>
+            <div class="search-container">
+                <input type="search" placeholder="Caută cărți, autori..." class="search-input">
+                <button class="search-btn">Caută</button>
+            </div>
+            <div class="search-results"style="display: none;">
+                
+            </div>
         </div>
         <div class="prop-user">
             <div class="user-menu">
@@ -47,14 +53,15 @@
                     <span id="username"> </span>
                     <li><img src="./src/profileIcon.png"><a href="./html/user_profile.html">Profilul Meu</a></li>
                     <li><img src="./src/settingsIcon.png"> <a href="./html/user_settings.html">Setări</a></li>
-                        <div id="adminPanel" style="display:none;">
-                            <li><img src="./src/requestsIcon.png"><a href="./html/requests.html">Cereri de acceptat</a></li>
-                            <li><img src="./src/usersIcon.png"><a href="./html/users_management.html">Gestionare Utilizatori</a>
-                            </li>
-                        </div>
-                        
+                    <div id="adminPanel" style="display:none;">
+                        <li><img src="./src/requestsIcon.png"><a href="./html/requests.html">Cereri de acceptat</a></li>
+                        <li><img src="./src/usersIcon.png"><a href="./html/users_management.html">Gestionare
+                                Utilizatori</a>
+                        </li>
+                    </div>
+
                     <li><img src="./src/addbooksIcon.png"><a href="./html/bookupload.html">Adaugă o carte nouă</a>
-                        <li><img src="./src/editbookIcon.png"><a href="./html/genrepage.html">Editează cărți</a>
+                    <li><img src="./src/editbookIcon.png"><a href="./html/genrepage.html">Editează cărți</a>
                 </div>
             </div>
             <p class="form__text">
@@ -94,59 +101,35 @@
 
             <section class="history">
                 <h2>Istoria Noastră</h2>
-                <p>Fondat în 2023, "Urme pe Hârtie" a început ca un mic proiect de pasiune pentru literatură. De-a
+                <p>Fondat în 2024, "Urme pe Hârtie" a început ca un mic proiect de pasiune pentru literatură. De-a
                     lungul timpului, am crescut și am devenit o comunitate vibrantă de cititori pasionați.</p>
             </section>
 
             <section class="team">
                 <h2>Echipa Noastră</h2>
                 <div class="team-members">
-                    <div class="team-member">
-                        <img src="team_member_1.jpg" alt="Member 1">
-                        <h3>Nume Membru 1</h3>
-                        <p>Fondator & CEO</p>
-                    </div>
-                    <div class="team-member">
-                        <img src="team_member_2.jpg" alt="Member 2">
-                        <h3>Nume Membru 2</h3>
-                        <p>Director Editorial</p>
-                    </div>
-                    <!-- Adaugă mai mulți membri ai echipei după nevoie -->
+
                 </div>
             </section>
 
             <section class="publishing-process">
                 <h2>Procesul de Publicare</h2>
                 <p>Utilizatorii pot încărca propriile opere urmând acești pași simpli: creați un cont, încărcați opera,
-                    și respectați regulile comunității noastre. Echipa noastră va aproba opera în cel mai scurt timp.
+                    și respectați regulile comunității noastre. Echipa noastră va aproba cartea în cel mai scurt timp.
                 </p>
             </section>
 
             <section class="statistics">
                 <h2>Statistici și Realizări</h2>
-                <p>Până acum, comunitatea noastră a încărcat peste 1.000 de cărți, iar site-ul nostru are peste 5.000 de
-                    utilizatori activi.</p>
+                <div class="statistics-content">
+                </div>
             </section>
 
             <section class="community-authors">
                 <h2>Autorii Comunității</h2>
                 <div class="authors-list">
-                    <div class="author">
-                        <h3>Nume Autor 1</h3>
-                        <p>Biografie scurtă și linkuri către opere.</p>
-                    </div>
-                    <div class="author">
-                        <h3>Nume Autor 2</h3>
-                        <p>Biografie scurtă și linkuri către opere.</p>
-                    </div>
-                    <!-- Adaugă mai mulți autori după nevoie -->
+                    <!-- Autorii vor fi încărcați dinamic aici -->
                 </div>
-            </section>
-
-            <section class="partnerships">
-                <h2>Parteneriate și Colaborări</h2>
-                <p>Colaborăm cu numeroase edituri și autori celebri pentru a aduce cele mai bune cărți la îndemâna
-                    cititorilor noștri.</p>
             </section>
 
             <section class="user-guide">
@@ -165,20 +148,9 @@
                 </ul>
             </section>
 
-            <section class="testimonials">
-                <h2>Ce Spun Utilizatorii Noștri</h2>
-                <blockquote>
-                    <p>"Urme pe Hârtie mi-a redeschis apetitul pentru lectură. Găsesc mereu cărți interesante și bine
-                        structurate!" - Andreea M.</p>
-                </blockquote>
-                <blockquote>
-                    <p>"Un site extraordinar pentru orice iubitor de cărți. Recomand cu drag!" - Ioan P.</p>
-                </blockquote>
-            </section>
-
             <section class="contact">
                 <h2>Contactează-ne</h2>
-                <p>Ne poți trimite un mesaj la <a href="mailto:contact@urmepethartie.ro">contact@urmepethartie.ro</a>
+                <p>Ne poți trimite un mesaj la <a href="mailto:urmepehartie15@gmail.com">urmepehartie15@gmail.com</a>
                     sau ne poți urmări pe rețelele sociale pentru cele mai noi actualizări.</p>
             </section>
         </div>

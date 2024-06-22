@@ -6,39 +6,48 @@ import {
   auth,
   onAuthStateChanged,
   signOut,
-  onValue
+  onValue,
+  database,
 } from "./firebaseConfig.js";
 
-document.getElementById("linkLogin").addEventListener("click", function (event) {
-  event.preventDefault();
-  window.location.href = "../html/login.html";
-});
-
-document.addEventListener("DOMContentLoaded", (event) => {
-  const userMenu = document.getElementById('userDropdown');
-  const userIcon = document.getElementById('userPhoto');
-  const searchButton = document.querySelector(".search-btn");
-  const linkLogout = document.getElementById("linkLogout");
-
-  userIcon.addEventListener("click", () => {
-    userMenu.style.display = (userMenu.style.display === 'flex') ? 'none' : 'flex';
+document
+  .getElementById("linkLogin")
+  .addEventListener("click", function (event) {
+    event.preventDefault();
+    window.location.href = "../html/login.html";
   });
 
-  const prevButton = document.querySelector('.carousel-button.prev');
-  const nextButton = document.querySelector('.carousel-button.next');
-  const carousel = document.querySelector('.carousel-container');
+document.addEventListener("DOMContentLoaded", (event) => {
+  const userMenu = document.getElementById("userDropdown");
+  const userIcon = document.getElementById("userPhoto");
+  const linkLogout = document.getElementById("linkLogout");
 
-  prevButton.addEventListener('click', () => {
+  const searchInput = document.querySelector('.search-input');
+  const searchResultsContainer = document.querySelector('.search-results');
+  searchInput.value = '';
+  searchResultsContainer.innerHTML = '';
+  searchResultsContainer.style.display = 'none';
+
+  userIcon.addEventListener("click", () => {
+    userMenu.style.display =
+      userMenu.style.display === "flex" ? "none" : "flex";
+  });
+
+  const prevButton = document.querySelector(".carousel-button.prev");
+  const nextButton = document.querySelector(".carousel-button.next");
+  const carousel = document.querySelector(".carousel-container");
+
+  prevButton.addEventListener("click", () => {
     carousel.scrollBy({
-      left: -1000, // Adjust scroll amount to fit five items
-      behavior: 'smooth'
+      left: -1000,
+      behavior: "smooth",
     });
   });
 
-  nextButton.addEventListener('click', () => {
+  nextButton.addEventListener("click", () => {
     carousel.scrollBy({
-      left: 1000, // Adjust scroll amount to fit five items
-      behavior: 'smooth'
+      left: 1000,
+      behavior: "smooth",
     });
   });
 
@@ -60,7 +69,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
               document.getElementById("adminPanel").style.display = "none";
             }
             if (userData.userName) {
-              document.getElementById("username").textContent = userData.userName;
+              document.getElementById("username").textContent =
+                userData.userName;
             }
             if (userData.photoURL) {
               document.getElementById("userPhoto").src = userData.photoURL;
@@ -91,12 +101,82 @@ document.addEventListener("DOMContentLoaded", (event) => {
       });
   });
 
-  searchButton.addEventListener("click", () => {
-    const searchInput = document.querySelector(".search-input").value;
-    console.log(`Search for: ${searchInput}`);
-    // window.location.href = `/search?query=${encodeURIComponent(searchInput)}`;
+  const teamContainer = document.querySelector(".team-members");
+  const statisticsContainer = document.querySelector(".statistics-content");
+
+  const booksRef = ref(database, "books");
+  const usersRef = ref(database, "users");
+
+  get(booksRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      const booksCount = snapshot.size;
+      const booksElement = `
+        <div class="stat-card">
+            <h3>${booksCount}</h3>
+            <p>Cărți disponibile</p>
+        </div>
+        `;
+      statisticsContainer.innerHTML += booksElement;
+    }
   });
 
+  get(usersRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      const usersCount = snapshot.size;
+      const usersElement = `
+        <div class="stat-card">
+            <h3>${usersCount}</h3>
+            <p>Utilizatori activi</p>
+        </div>
+        `;
+      statisticsContainer.innerHTML += usersElement;
+
+      snapshot.forEach((childSnapshot) => {
+        const user = childSnapshot.val();
+        if (user.role === "admin") {
+          const teamMemberElement = `
+                <div class="team-member">
+                    <img src="${user.photoURL}" alt="${user.firstName} ${user.lastName}">
+                    <h3>${user.firstName} ${user.lastName}</h3>
+                    <p>Admin</p>
+                </div>
+                `;
+          teamContainer.innerHTML += teamMemberElement;
+        }
+      });
+    }
+  });
+
+  const authorsContainer = document.querySelector(".authors-list");
+
+  function displayAuthors() {
+    get(booksRef).then((snapshot) => {
+      if (snapshot.exists()) {
+        const authorsSet = new Set();
+        snapshot.forEach((childSnapshot) => {
+          const book = childSnapshot.val();
+          if (book.author) {
+            authorsSet.add(book.author);
+          }
+        });
+
+        const authorsArray = Array.from(authorsSet).slice(0, 5);
+
+        authorsArray.forEach((author) => {
+          const authorElement = `
+                <div class="author">
+                    <h3>${author}</h3>
+                    <p>Autor cunoscut în comunitatea noastră.</p>
+                </div>
+                `;
+          authorsContainer.innerHTML += authorElement;
+        });
+      }
+    });
+  }
+
+  // Apelează funcția pentru a afișa autorii
+  displayAuthors();
   loadBooks();
 
   fetchBooks();
@@ -151,27 +231,34 @@ function loadBooks() {
 
         document.querySelector(".carousel-track").innerHTML = htmlContent;
         document.querySelector(".carousel-container").scrollLeft = 0;
-        document.querySelector(".carousel-container").addEventListener("click", function (event) {
-          if (event.target.classList.contains("book-cover")) {
-            const bookDiv = event.target.closest(".book");
-            const bookId = bookDiv.getAttribute("data-book-id");
-            console.log(`Selected book ID: ${bookId}`);
-            window.location.href = `../html/bookdetails.html?bookId=${encodeURIComponent(bookId)}`;
-          }
-        });
+        document
+          .querySelector(".carousel-container")
+          .addEventListener("click", function (event) {
+            if (event.target.classList.contains("book-cover")) {
+              const bookDiv = event.target.closest(".book");
+              const bookId = bookDiv.getAttribute("data-book-id");
+              console.log(`Selected book ID: ${bookId}`);
+              window.location.href = `../html/bookdetails.html?bookId=${encodeURIComponent(
+                bookId
+              )}`;
+            }
+          });
       } else {
         console.log("No data available");
-        document.querySelector(".carousel-track").innerHTML = "<p>No books available.</p>";
+        document.querySelector(".carousel-track").innerHTML =
+          "<p>No books available.</p>";
       }
     })
     .catch((error) => {
       console.error("Failed to load books", error);
-      document.querySelector(".carousel-track").innerHTML = `<p>Error loading books: ${error.message}</p>`;
+      document.querySelector(
+        ".carousel-track"
+      ).innerHTML = `<p>Error loading books: ${error.message}</p>`;
     });
 }
 
 function fetchBooks() {
-  const booksRef = ref(getDatabase(), 'books');
+  const booksRef = ref(getDatabase(), "books");
   onValue(booksRef, (snapshot) => {
     const booksData = [];
     snapshot.forEach((childSnapshot) => {
@@ -192,21 +279,27 @@ function displayPopularCategories(booksData) {
     favoriteGenres.set(genre, (favoriteGenres.get(genre) || 0) + 1);
   });
 
-  const sortedGenres = [...favoriteGenres.entries()].sort((a, b) => b[1] - a[1]);
+  const sortedGenres = [...favoriteGenres.entries()].sort(
+    (a, b) => b[1] - a[1]
+  );
   const displayedGenres = new Set();
 
-  const popularCategoriesContainer = document.querySelector('.popular-categories-list');
+  const popularCategoriesContainer = document.querySelector(
+    ".popular-categories-list"
+  );
 
-  popularCategoriesContainer.innerHTML = '';
+  popularCategoriesContainer.innerHTML = "";
 
   sortedGenres.forEach(([genre, count], index) => {
     if (displayedGenres.size < 3 && !displayedGenres.has(genre)) {
-      const book = booksData.find(b => b.genre === genre);
-      const bookElement = document.createElement('div');
-      bookElement.classList.add('popular-book-display');
+      const book = booksData.find((b) => b.genre === genre);
+      const bookElement = document.createElement("div");
+      bookElement.classList.add("popular-book-display");
       bookElement.innerHTML = `
         <div class="popular-book-cover-container" onclick="window.location.href='../html/booksbygenre.html?genre=${genre}'">
-          <img src="${book.coverUrl}" alt="${book.title}" class="popular-book-cover">
+          <img src="${book.coverUrl}" alt="${
+        book.title
+      }" class="popular-book-cover">
           <p class="genre-label">${book.genre}</p>
           <div class="podium-position">${index + 1}</div>
         </div>
@@ -218,3 +311,69 @@ function displayPopularCategories(booksData) {
 
   console.log("Displayed genres:", displayedGenres);
 }
+
+document.querySelector(".search-input").addEventListener("input", (e) => {
+  searchBooks(e.target.value.trim().toLowerCase());
+});
+document.querySelector('.search-btn').addEventListener('click', () => {
+  const searchInput = document.querySelector('.search-input');
+  searchBooks(searchInput.value.trim().toLowerCase());
+});
+
+const searchBooks = (query) => {
+  const searchResultsContainer = document.querySelector(".search-results");
+  searchResultsContainer.innerHTML = ""; // Clear previous results
+
+  if (query.length === 0) {
+      searchResultsContainer.style.display = "none";
+      return;
+  }
+
+  const booksRef = ref(getDatabase(), "books");
+  get(booksRef)
+      .then((snapshot) => {
+          const books = snapshot.val();
+          const filteredBooks = [];
+
+          for (const bookId in books) {
+              const book = books[bookId];
+              if (
+                  book.title.toLowerCase().includes(query) ||
+                  book.author.toLowerCase().includes(query)
+              ) {
+                  filteredBooks.push({ ...book, id: bookId });
+              }
+          }
+
+          if (filteredBooks.length === 0) {
+              searchResultsContainer.style.display = "none";
+          } else {
+              filteredBooks.forEach((book) => {
+                  const bookElement = document.createElement("div");
+                  bookElement.className = "search-result";
+                  bookElement.innerHTML = `
+                      <div class="book-cover">
+                          <img src="${book.coverUrl}" alt="${book.title}">
+                      </div>
+                      <div class="book-info">
+                          <h3>${book.title}</h3>
+                          <p>${book.author}</p>
+                      </div>
+                  `;
+                  bookElement.addEventListener("click", () => {
+                      const searchInput = document.querySelector(".search-input");
+                      searchInput.value = "";
+                      window.location.href = `../html/bookdetails.html?bookId=${encodeURIComponent(
+                          book.id
+                      )}`;
+                  });
+                  searchResultsContainer.appendChild(bookElement);
+              });
+
+              searchResultsContainer.style.display = "block";
+          }
+      })
+      .catch((error) => {
+          console.error("Error getting books:", error);
+      });
+};

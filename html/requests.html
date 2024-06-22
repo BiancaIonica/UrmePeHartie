@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cere Administrator</title>
   <link rel="stylesheet" href="../css/requests.css"> 
+  <link rel="icon" href="../src/lavender.ico" type="image/x-icon">
   <script type="module" src="../src/firebaseConfig.js" ></script>
   <script  type="module" src="../js/requests.js"></script>
 </head>
@@ -57,9 +58,16 @@
         </p>
     </div>
 </div>
-  <h1 id="title">Cereri de aprobat</h1>
-  <div id="requestsContainer"></div>
+<div class="container">
+    <div class="half-container">
+      <h1>Cereri de Aprobare</h1>
+      <div id="requestsContainer"></div>
+    </div>
+    <div class="half-container">
+      <h1>Cereri de Editare</h1>
+      <div id="editRequestsContainer"></div>
+    </div>
+  </div>
 
-  <script src="../js/requests.js"></script> <!-- Link to your JavaScript file -->
 </body>
 </html>

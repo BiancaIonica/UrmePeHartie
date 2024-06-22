@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/bookupload.css"> 
+    <link rel="icon" href="../src/lavender.ico" type="image/x-icon">
     <title>Upload Books to Firebase</title>
     <script type="module" src="../src/firebaseConfig.js" ></script>
     <script type="module" src="../js/booksupload.js" ></script>
@@ -20,6 +21,7 @@
             <input type="file" id="coverInput" accept="image/*">
         </div>
         <button id="uploadButton">Încărcați fișiere</button>
+        <div id="overlay" class="overlay"></div>
         <div id="uploadPopup" class="popup-container" style="display: none;">
             <div class="popup-content">
                 <span id="uploadMessage"></span>

@@ -53,6 +53,7 @@ body {
     width: 100%;
 }
 
+
 .button {
     display: inline-block;
     padding: 10px 20px;
@@ -210,7 +211,7 @@ body {
     overflow: hidden;
     cursor: pointer; 
     border: 2px solid white; 
-    margin-left: auto; /* Acest lucru împinge iconița spre dreapta */
+    margin-left: auto;
     margin-right: 10px; 
   
 }
@@ -355,3 +356,79 @@ p {
 
    
 }
+
+/* Add this to your existing CSS file or within a <style> tag in your HTML */
+
+.tab-content {
+    padding: 20px;
+  }
+  
+  .post {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    padding: 15px;
+    transition: all 0.3s ease;
+    max-height: 300px; /* Constrain the height */
+    overflow: hidden; /* Hide overflow initially */
+    position: relative; /* For positioning the scrollbar */
+  }
+  
+  .post:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .post-title {
+    font-size: 1.25em;
+    margin: 0;
+    color: #333;
+  }
+  
+  .post-category {
+    font-size: 0.875em;
+    color: #888;
+    background: #f0f0f0;
+    border-radius: 3px;
+    padding: 3px 6px;
+  }
+  
+  .post-body {
+    margin-bottom: 10px;
+    max-height: 200px; /* Limit the height of the text container */
+    overflow-y: auto; /* Make the text container scrollable */
+    padding-right: 10px; /* Add some padding to avoid overlap with scrollbar */
+  }
+  
+  .post-footer {
+    font-size: 0.875em;
+    color: #555;
+    text-align: right;
+  }
+  
+  /* Optional: Custom scrollbar styling */
+  .post-body::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .post-body::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+  }
+  
+  .post-body::-webkit-scrollbar-thumb:hover {
+    background: #bbb;
+  }
+  
+  .post-body::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+  

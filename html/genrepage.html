@@ -6,20 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrație Cărți</title>
     <link rel="stylesheet" href="../css/genrepage.css">
+    <link rel="icon" href="../src/lavender.ico" type="image/x-icon">
     <script type="module" src="../src/firebaseConfig.js"></script>
     <script type="module" src="../js/genrepage.js" defer></script>
 </head>
 
 <body>
+    <button class="back-button" onclick="window.location.href='../index.html'">
+        <img src="../src/back_icon.png" alt="Back" class="back-icon">
+    </button>
     <div class="main-container">
-        <h1>Administrație Cărți</h1>
+        <h1>Administrare Cărți</h1>
         <input type="text" id="searchInput" placeholder="Caută carte după titlu sau autor...">
         <button id="searchButton">Caută</button>
 
         <div id="booksContainer">
-            <!-- Cărțile vor fi încărcate aici dinamic -->
         </div>
     </div>
+    <div id="popupMessage" class="popup-message">
+        <div class="popup-content">
+          <span id="uploadMessage"></span>
+          <button type="button" class="close-button">Închide</button>
+        </div>
+      </div>
 </body>
 
 </html>

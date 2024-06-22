@@ -41,3 +41,35 @@ exports.sendApprovalEmail = functions.database
       console.error('Eroare la trimiterea email-ului:', error);
     }
   });
+
+exports.sendEditRequestEmail = functions.database
+  .ref('/edit_requests/{requestId}')
+  .onDelete(async (snapshot) => { 
+    const requestData = snapshot.val();
+    const status = requestData.status;
+    const userEmail = requestData.userEmail;
+    const subject = status === 'approved' ?
+      'Cererea de editare a fost aprobată' :
+      'Cererea de editare a fost respinsă';
+    const message = status === 'approved' ?
+      `Cererea dumneavoastră de editare pentru cartea 
+      "${requestData.bookTitle}" ` +
+      `de ${requestData.bookAuthor} a fost aprobată.` :
+      `Cererea dumneavoastră de editare pentru cartea 
+      "${requestData.bookTitle}" ` +
+      `de ${requestData.bookAuthor} a fost respinsă.`;
+
+    const mailOptions = {
+      from: 'urmepehartie15@gmail.com',
+      to: userEmail,
+      subject: subject,
+      text: message
+    };
+
+    try {
+      await transporter.sendMail(mailOptions);
+      console.log('Email trimis cu succes');
+    } catch (error) {
+      console.error('Eroare la trimiterea email-ului:', error);
+    }
+  });

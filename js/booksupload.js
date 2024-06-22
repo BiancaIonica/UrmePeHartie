@@ -11,7 +11,7 @@ import {
   push
 } from "../src/firebaseConfig.js";
 
-// Function to parse the filename
+
 function parseFilename(filename) {
   const cleanedFilename = filename.replace(".pdf", "");
   const dashIndex = cleanedFilename.indexOf(" - ");
@@ -26,7 +26,7 @@ function parseFilename(filename) {
   return { author, title, valid: true };
 }
 
-// Function to upload the book and cover
+
 async function uploadBookAndCover(pdfFile, coverFile, userRole, userEmail) {
   const fileInfo = parseFilename(pdfFile.name);
   if (!fileInfo.valid) {
@@ -46,14 +46,7 @@ async function uploadBookAndCover(pdfFile, coverFile, userRole, userEmail) {
     const coverSnapshot = await uploadBytes(coverRef, coverFile);
     const coverUrl = await getDownloadURL(coverSnapshot.ref);
     const bookId = fileInfo.title.replace(/\s+/g, '_').toLowerCase();
-    const booksRef = databaseRef(database, userRole === "admin" ? `books/${bookId}` : `pending_books/${bookId}`);
-    await set(booksRef, {
-      author: fileInfo.author,
-      title: fileInfo.title,
-      pdfUrl: pdfUrl,
-      coverUrl: coverUrl,
-    });
-    console.log(`O nouă modificare în baza de date pentru ${bookId}`);
+    
     if (userRole !== "admin") {
       await sendApprovalRequest(fileInfo.title, fileInfo.author, pdfUrl, coverUrl, userEmail);
       showPopup("Cerere trimisă către un administrator.");
@@ -81,10 +74,12 @@ function showPopup(message) {
   const popup = document.getElementById("uploadPopup");
   document.getElementById("uploadMessage").textContent = message;
   popup.style.display = "block";
+  overlay.style.display = "block";
 }
 
 function closePopup() {
   document.getElementById("uploadPopup").style.display = "none";
+  overlay.style.display = "none";
 }
 
 function clearInputs() {
@@ -94,7 +89,6 @@ function clearInputs() {
   coverInput.value = ""; 
 }
 
-// Function to send an approval request to the admin
 async function sendApprovalRequest(title, author, pdfUrl, coverUrl, userEmail) {
   const approvalRequestsRef = databaseRef(database, "approval_requests");
   const newRequestRef = push(approvalRequestsRef);
@@ -113,7 +107,7 @@ async function sendApprovalRequest(title, author, pdfUrl, coverUrl, userEmail) {
   }
 }
 
-// Function to check user's role from the database
+
 async function checkUserRole(user) {
   const userRef = databaseRef(database, `users/${user.uid}`);
   try {
@@ -131,10 +125,10 @@ async function checkUserRole(user) {
   }
 }
 
-// Adding event listeners after the DOM has fully loaded
+
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM fully loaded and parsed");
-
+  const overlay = document.getElementById("overlay");
   const fileInput = document.getElementById("fileInput");
   const coverInput = document.getElementById("coverInput");
   const fileDragArea = document.getElementById("fileDragArea");

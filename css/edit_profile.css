@@ -168,3 +168,21 @@ input[type="text"], select, textarea {
 .close-button:hover {
   background-color: rgb(95, 93, 93);
 }
+
+.back-button {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.back-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.back-button:hover .back-icon {
+  opacity: 0.7;
+}

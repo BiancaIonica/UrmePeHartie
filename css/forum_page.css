@@ -88,7 +88,7 @@ button:hover {
     display: flex;
     flex-direction: column-reverse; /* This will reverse the order of displayed posts */
     overflow-y: auto; /* Enables vertical scrolling */
-    max-height: 300px; /* Adjust based on your preference */
+    max-height: 450px; /* Adjust based on your preference */
 }
 
 
