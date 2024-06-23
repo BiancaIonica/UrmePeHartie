@@ -74,3 +74,18 @@ button {
 #deleteButton:hover {
     background-color: #d7382a; 
 }
+.back-link {
+    position: absolute;
+    top: 20px; 
+    left: 20px; 
+    text-decoration: none;
+}
+
+.back-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.back-link:hover .back-icon {
+    opacity: 0.7;
+}

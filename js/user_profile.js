@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Adăugare evenimente pentru tab-uri
+  
   const tabs = document.querySelectorAll(".tab-link");
   tabs.forEach((tab) => {
     tab.addEventListener("click", function (evt) {
@@ -202,10 +202,10 @@ function loadPosts() {
   const user = auth.currentUser;
   const postsContainer = document.getElementById("Posts");
 
-  // Clear existing posts
+  
   postsContainer.innerHTML = '';
 
-  // Define the tables to fetch posts from
+
   const tables = ['literature', 'poetry', 'chat'];
 
   tables.forEach((table) => {

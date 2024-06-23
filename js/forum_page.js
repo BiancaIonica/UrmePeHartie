@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     var tablinks = document.getElementsByClassName("tab-link");
     for (let i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
-      tabcontent[i].classList.remove("active"); // Deactivate all tabs
+      tabcontent[i].classList.remove("active"); 
     }
     for (let i = 0; i < tablinks.length; i++) {
       tablinks[i].classList.remove("active");
@@ -135,17 +135,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function handleLike(postId, category, btn) {
     const user = auth.currentUser;
-    if (!user) {
-      alert("You must be logged in to like!");
-      return;
-    }
-
+  
     const postRef = ref(database, `${category}/${postId}`);
     get(postRef)
       .then((snapshot) => {
         const postData = snapshot.val();
         if (!postData) {
-          console.error("Post data not found");
+          console.error("Datele postării nu au fost găsite!");
           return;
         }
         if (postData.likedBy && postData.likedBy[user.uid]) {
@@ -164,12 +160,10 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.classList.toggle("liked");
           })
           .catch((error) => {
-            console.error("Error updating likes:", error);
+            console.error("Eroare la actualizarea numărului de aprecieri:", error);
           });
       })
-      .catch((error) => {
-        console.error("Error reading post data:", error);
-      });
+
   }
 
   const tabs = document.querySelectorAll(".tab-link");

@@ -12,12 +12,57 @@ import {
   remove,
   update,
   onAuthStateChanged,
-  getDatabase
+  getDatabase,
+  getAuth,
+  signOut
 } from "../src/firebaseConfig.js";
 
 function encodeEmail(email) {
-  return email.replace(/\./g, ','); // Replace dots with commas
+  return email.replace(/\./g, ","); 
 }
+
+function toggleAuthButtons(user) {
+  const loginLink = document.getElementById("linkLogin");
+  const logoutLink = document.getElementById("linkLogout");
+
+  if (user) {
+    if (loginLink) loginLink.style.display = "none";
+    if (logoutLink) logoutLink.style.display = "block";
+  } else {
+    if (loginLink) loginLink.style.display = "block";
+    if (logoutLink) logoutLink.style.display = "none";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const userMenu = document.getElementById("userDropdown");
+  const userIcon = document.getElementById("userPhoto");
+  const linkLogout = document.getElementById("linkLogout");
+
+  if (userIcon) {
+    userIcon.addEventListener("click", () => {
+      userMenu.style.display =
+        userMenu.style.display === "flex" ? "none" : "flex";
+    });
+  }
+
+  if (linkLogout) {
+    linkLogout.addEventListener("click", (event) => {
+      event.preventDefault();
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          console.log("User logged out");
+          toggleAuthButtons(null);
+          console.log("Redirecting to ../index.html");
+          window.location.href = "../index.html";
+        })
+        .catch((error) => {
+          console.error("Logout error", error);
+        });
+    });
+  }
+});
 
 async function displayApprovalRequests() {
   const requestsContainer = document.getElementById("requestsContainer");
@@ -27,7 +72,7 @@ async function displayApprovalRequests() {
     const snapshot = await get(approvalRequestsRef);
     if (snapshot.exists()) {
       const requests = snapshot.val();
-      requestsContainer.innerHTML = ""; // Curăță cererile existente
+      requestsContainer.innerHTML = ""; 
       for (const requestId in requests) {
         const request = requests[requestId];
         const requestElement = document.createElement("div");
@@ -37,13 +82,25 @@ async function displayApprovalRequests() {
           <h2>${request.title}</h2>
           <p><strong>Autor:</strong> ${request.author}</p>
           <p><strong>Email:</strong> ${request.email}</p>
-          <p><strong>PDF:</strong> <a href="${request.pdfUrl}" target="_blank">Citește PDF</a></p>
-          <p><strong>Copertă:</strong> <a href="${request.coverUrl}" target="_blank">Vizualizează Copertă</a></p>
-          <p><strong>Timestamp:</strong> ${new Date(request.timestamp).toLocaleString()}</p>
+          <p><strong>PDF:</strong> <a href="${
+            request.pdfUrl
+          }" target="_blank">Citește PDF</a></p>
+          <p><strong>Copertă:</strong> <a href="${
+            request.coverUrl
+          }" target="_blank">Vizualizează Copertă</a></p>
+          <p><strong>Timestamp:</strong> ${new Date(
+            request.timestamp
+          ).toLocaleString()}</p>
         </div>
         <div class="buttons">
-          <button class="approve-btn" onclick="approveRequest('${requestId}', '${request.title}', '${request.author}', '${request.pdfUrl}', '${request.coverUrl}', '${request.email}')">Acceptă</button>
-          <button class="reject-btn" onclick="rejectRequest('${requestId}', '${request.pdfUrl}', '${request.coverUrl}', '${request.email}')">Respinge</button>
+          <button class="approve-btn" onclick="approveRequest('${requestId}', '${
+          request.title
+        }', '${request.author}', '${request.pdfUrl}', '${request.coverUrl}', '${
+          request.email
+        }')">Acceptă</button>
+          <button class="reject-btn" onclick="rejectRequest('${requestId}', '${
+          request.pdfUrl
+        }', '${request.coverUrl}', '${request.email}')">Respinge</button>
         </div>
       `;
         requestsContainer.appendChild(requestElement);
@@ -53,11 +110,11 @@ async function displayApprovalRequests() {
     }
   } catch (error) {
     console.error("Error fetching approval requests:", error);
-    requestsContainer.innerHTML = "<p>Error loading approval requests. Please try again later.</p>";
+    requestsContainer.innerHTML =
+      "<p>Error loading approval requests. Please try again later.</p>";
   }
 }
 
-// Funcția pentru a afișa cererile de editare
 async function displayEditRequests() {
   const editRequestsContainer = document.getElementById("editRequestsContainer");
   const editRequestsRef = ref(database, "edit_requests");
@@ -66,12 +123,12 @@ async function displayEditRequests() {
     const snapshot = await get(editRequestsRef);
     if (snapshot.exists()) {
       const requests = snapshot.val();
-      editRequestsContainer.innerHTML = ""; // Curăță cererile existente
-      
-      // Convertește obiectul cererilor într-un array și sortează după timestamp
-      const sortedRequests = Object.entries(requests).sort((a, b) => b[1].timestamp - a[1].timestamp);
+      editRequestsContainer.innerHTML = ""; 
 
-      // Iterează peste cererile sortate și creează elemente
+      const sortedRequests = Object.entries(requests).sort(
+        (a, b) => b[1].timestamp - a[1].timestamp
+      );
+
       sortedRequests.forEach(([requestId, request]) => {
         const requestElement = document.createElement("div");
         requestElement.className = "request";
@@ -80,45 +137,52 @@ async function displayEditRequests() {
             <h2>${request.bookTitle}</h2>
             <p><strong>Autor:</strong> ${request.bookAuthor}</p>
             <p><strong>Email:</strong> ${request.userEmail}</p>
-            <p><strong>Timestamp:</strong> ${new Date(request.timestamp).toLocaleString()}</p>
+            <p><strong>Timestamp:</strong> ${new Date(
+              request.timestamp
+            ).toLocaleString()}</p>
           </div>
           <div class="buttons">
-            <button class="approve-btn" onclick="approveEditRequest('${requestId}', '${request.bookId}', '${request.userEmail}')">Approve</button>
-            <button class="reject-btn" onclick="rejectEditRequest('${requestId}', '${request.userEmail}')">Reject</button>
+            <button class="approve-btn" onclick="approveEditRequest('${requestId}', '${
+          request.bookId
+        }', '${request.userEmail}')">Acceptă</button>
+            <button class="reject-btn" onclick="rejectEditRequest('${requestId}', '${
+          request.userEmail
+        }')">Respinge</button>
           </div>
         `;
         editRequestsContainer.appendChild(requestElement);
       });
     } else {
-      editRequestsContainer.innerHTML = "<p>No edit requests found.</p>";
+      editRequestsContainer.innerHTML =
+        "<p>Nu există cereri de editare momentan.</p>";
     }
   } catch (error) {
     console.error("Error fetching edit requests:", error);
-    editRequestsContainer.innerHTML = "<p>Error loading edit requests. Please try again later.</p>";
+    editRequestsContainer.innerHTML =
+      "<p>Eroare la încărcarea cererilor. Încercați mai târziu.</p>";
   }
 }
 
-// Funcția pentru aprobarea cererilor de editare
 async function approveEditRequest(requestId, bookId, userEmail) {
   try {
-    // Set the status of the request to approved
     const editRequestRef = ref(database, `edit_requests/${requestId}`);
-    await update(editRequestRef, { status: 'approved' });
+    await update(editRequestRef, { status: "approved" });
 
-    // Encode the email to use it in the Firebase path
     const encodedEmail = encodeEmail(userEmail);
 
-    // Mark the book as editable for the user in Firebase
-    const userEditRef = ref(database, `user_edit_flags/${encodedEmail}/${bookId}`);
+    const userEditRef = ref(
+      database,
+      `user_edit_flags/${encodedEmail}/${bookId}`
+    );
     await set(userEditRef, true);
 
-    // Verify the flag is set correctly
     const canEditFlag = await get(userEditRef);
-    console.log(`Verification in approval page: canEdit_${bookId} = ${canEditFlag.val()}`);
+    console.log(
+      `Verification in approval page: canEdit_${bookId} = ${canEditFlag.val()}`
+    );
 
-    await remove(editRequestRef); // Delete the request after approval
+    await remove(editRequestRef);
 
-    // Redisplay requests after update
     displayEditRequests();
   } catch (error) {
     console.error("Error approving edit request:", error);
@@ -126,17 +190,12 @@ async function approveEditRequest(requestId, bookId, userEmail) {
   }
 }
 
-
-
-// Funcția pentru respingerea cererilor de editare
 async function rejectEditRequest(requestId, userEmail) {
   try {
-    // Setează statusul cererii ca respins
     const editRequestRef = ref(database, `edit_requests/${requestId}`);
-    await update(editRequestRef, { status: 'rejected' });
+    await update(editRequestRef, { status: "rejected" });
 
-    await remove(editRequestRef); // Șterge cererea
-
+    await remove(editRequestRef);
     displayEditRequests();
   } catch (error) {
     console.error("Error rejecting edit request:", error);
@@ -144,8 +203,14 @@ async function rejectEditRequest(requestId, userEmail) {
   }
 }
 
-// Funcția pentru aprobarea cererilor de încărcare
-async function approveRequest(requestId, title, author, pdfUrl, coverUrl, userEmail) {
+async function approveRequest(
+  requestId,
+  title,
+  author,
+  pdfUrl,
+  coverUrl,
+  userEmail
+) {
   try {
     const formattedTitle = `${title}`.replace(/\s+/g, "_").toLowerCase();
     const pdfRefPending = storageRef(storage, pdfUrl);
@@ -173,36 +238,28 @@ async function approveRequest(requestId, title, author, pdfUrl, coverUrl, userEm
       coverUrl: newCoverUrl,
     });
 
-    // Update status to approved before removal
     const requestRef = ref(database, `approval_requests/${requestId}`);
     await update(requestRef, { status: "approved" });
     await remove(requestRef);
-
-    // Reafișează cererile
+    showPopup("Cerere aprobată! Mesaj trimis către utilizator.");
     displayApprovalRequests();
   } catch (error) {
-    console.error("Error approving request:", error);
-    alert("Error approving request. Please try again later.");
+    showPopup("Eroare la aprobare cerere: " + error.message);
   }
 }
 
-// Funcția pentru respingerea cererilor de încărcare
 async function rejectRequest(requestId, pdfUrl, coverUrl, userEmail) {
   try {
-    // Obține referințele de stocare
     const pdfRefPending = storageRef(storage, pdfUrl);
     const coverRefPending = storageRef(storage, coverUrl);
 
-    // Șterge fișierele PDF și coperta
     await deleteObject(pdfRefPending);
     await deleteObject(coverRefPending);
 
-    // Actualizează statusul la rejected înainte de ștergere
     const requestRef = ref(database, `approval_requests/${requestId}`);
     await update(requestRef, { status: "rejected" });
     await remove(requestRef);
 
-    // Reafișează cererile
     displayApprovalRequests();
   } catch (error) {
     console.error("Error rejecting request:", error);
@@ -210,14 +267,19 @@ async function rejectRequest(requestId, pdfUrl, coverUrl, userEmail) {
   }
 }
 
-// Verifică dacă un utilizator este conectat și afișează cererile de aprobare și cererile de editare
 onAuthStateChanged(auth, async (user) => {
   toggleAuthButtons(user);
+  const loginLink = document.getElementById("linkLogin");
+  const logoutLink = document.getElementById("linkLogout");
   if (user) {
     const userId = user.uid;
     const userRef = ref(getDatabase(), "users/" + userId);
     document.getElementById("forum").style.display = "block";
     document.getElementById("menuBiblioteca").style.display = "block";
+    
+    if (loginLink) loginLink.style.display = "none";
+    if (logoutLink) logoutLink.style.display = "block";
+
     get(userRef)
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -245,6 +307,8 @@ onAuthStateChanged(auth, async (user) => {
       });
     console.log(`User logged in: ${user.uid}`);
   } else {
+    if (loginLink) loginLink.style.display = "block";
+    if (logoutLink) logoutLink.style.display = "none";
     document.body.innerHTML =
       "<h1>Access Denied</h1><p>You must be logged in to view this page.</p>";
     document.getElementById("username").textContent = "Guest";
@@ -252,21 +316,20 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-// Expose the approveEditRequest and rejectEditRequest functions to the global scope so they can be used in the onclick handlers
 window.approveEditRequest = approveEditRequest;
 window.rejectEditRequest = rejectEditRequest;
 window.approveRequest = approveRequest;
 window.rejectRequest = rejectRequest;
 
-function toggleAuthButtons(user) {
-  const loginLink = document.getElementById("linkLogin");
-  const logoutLink = document.getElementById("linkLogout");
+function showPopup(message) {
+  const popup = document.getElementById("uploadPopup");
+  const overlay = document.getElementById("overlay");
+  document.getElementById("uploadMessage").textContent = message;
+  popup.style.display = "block";
+  overlay.style.display = "block";
+}
 
-  if (user) {
-    loginLink.style.display = "none";
-    logoutLink.style.display = "block";
-  } else {
-    loginLink.style.display = "block";
-    logoutLink.style.display = "none";
-  }
+function closePopup() {
+  document.getElementById("uploadPopup").style.display = "none";
+  document.getElementById("overlay").style.display = "none";
 }

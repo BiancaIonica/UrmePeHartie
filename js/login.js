@@ -95,13 +95,10 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         })
         .then(() => {
-          // Datele utilizatorului au fost setate cu succes
-          console.log("User created and role set to 'user'.");
           showPopup('Utilizator creat cu succes! Vă puteți autentifica.');
           clearInputs();
         })
         .catch((error) => {
-          console.error("Error on user creation or setting role:", error.message);
           showPopup('Utilizatorul nu a putut fi creat:' + error.message);
           clearInputs();
         });
@@ -167,7 +164,7 @@ closeButton.addEventListener('click', closePopup);
                     window.location.href = "index.html";
                   } else {
                     console.log(
-                      "Role is not set, setting default role to 'user'."
+                      "Rolul este setat implicit la 'user'."
                     );
                     set(
                       ref(database, `users/${userCredential.user.uid}/role`),
@@ -181,7 +178,8 @@ closeButton.addEventListener('click', closePopup);
             });
           })
           .catch((error) => {
-            console.error("Error on user login:", error.message);
+            console.error("Eroaare la autentificare:", error.message);
+            showPopup('Utilizatorul nu a putut fi autentificat:' + error.message);
           });
       }
 
@@ -201,11 +199,13 @@ closeButton.addEventListener('click', closePopup);
             if (emailFound) {
               authenticateUser(emailFound);
             } else {
-              console.error("Username not found");
+              console.error("Numele de utilizator nu a fost găsit.");
+              showPopup('Numele de utilizator nu a fost găsit.');
             }
           })
           .catch((error) => {
-            console.error("Error on user lookup:", error);
+            console.error("Eroare la căutarea numelui de utilizator:", error);
+            showPopup('Eroare la căutarea numelui de utilizator:'+ error.message);
           });
       }
     });

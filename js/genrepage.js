@@ -138,7 +138,7 @@ function loadBooks(isAdmin = false, query = "") {
 }
 
 async function canUserEditBook(bookId, userEmail) {
-  // Encode the email to use it in the Firebase path
+  
   const encodedEmail = encodeEmail(userEmail);
 
   const userEditRef = ref(database, `user_edit_flags/${encodedEmail}/${bookId}`);
@@ -155,7 +155,7 @@ async function canUserEditBook(bookId, userEmail) {
 }
 
 function encodeEmail(email) {
-  return email.replace(/\./g, ','); // Replace dots with commas
+  return email.replace(/\./g, ','); 
 }
 
 function saveDetails(bookId) {
@@ -169,13 +169,11 @@ function saveDetails(bookId) {
   update(bookRef, updates)
     .then(async () => {
       showPopupMessage("Details updated successfully!");
-      // Reset the edit flag after saving
       const user = auth.currentUser;
       const encodedEmail = encodeEmail(user.email);
       const userEditRef = ref(database, `user_edit_flags/${encodedEmail}/${bookId}`);
       await set(userEditRef, false);
       console.log(`Flag reset for book ${bookId}: false`);
-      // Reload the book list to reflect changes and disable editing
       loadBooks(isAdmin);
     })
     .catch((error) => {
@@ -209,7 +207,7 @@ function requestEdit(bookId) {
         showPopupMessage("Failed to send edit request. See console for errors.");
       });
   }, {
-    onlyOnce: true // Ensure that the onValue callback is called only once
+    onlyOnce: true 
   });
 }
 
